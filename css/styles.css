@@ -1,0 +1,50 @@
+main {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.heading {
+  height: 100px;
+  text-align: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.heading > h1 {
+  margin-left: auto;
+  margin-right: auto;
+  color: gray;
+
+}
+
+.proposal-item {
+  text-align: left;
+  background-color: #D3D3D3;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  padding: 1em;
+}
+
+.proposal-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5em;
+  width: 100%;
+}
+
+.description-item {
+  height: 350px;
+  width: 50%;
+}
+
+.closing {
+  background-color: #D3D3D3;
+  margin: 0.5em;
+}
+
+.closing-item {
+  height: 250px;
+  margin: 30px;
+  background-color: gray;
+  min-width: 25%;
+}
