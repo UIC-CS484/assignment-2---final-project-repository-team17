@@ -1,4 +1,4 @@
-assignment-1---team-project-proposal-team17 created by GitHub Classroom
+Assignment-1---team-project-proposal-team17 created by GitHub Classroom
 
 TEAM WORKFLOW STRATEGY
 
