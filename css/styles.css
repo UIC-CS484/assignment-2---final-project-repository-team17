@@ -55,3 +55,27 @@ main {
   flex-shrink: 0;
   flex-basis: 400px;
 }
+
+/* smaller than 1024 pixels */
+@media screen and (max-width: 1024px) {
+	#responsive{
+		background-color: #cd0000;
+	}
+}
+/* smaller than 768 pixels */
+@media screen and (max-width: 768px) {
+	#responsive{
+		background-color: #5222ff;
+	}
+}
+/* smaller than 480 pixels */
+@media screen and (max-width: 480px) {
+	#responsive{
+		background-color: #ffee00;
+	}
+}
+
+img{
+	max-width: 20%;
+	height: auto;
+	}
