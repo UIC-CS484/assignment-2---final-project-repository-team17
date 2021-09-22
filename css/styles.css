@@ -59,19 +59,19 @@ main {
 /* smaller than 1024 pixels */
 @media screen and (max-width: 1024px) {
 .heading{
-		background-color: #cd0000;
+		background-color: #382424;
 	}
 }
 /* smaller than 768 pixels */
 @media screen and (max-width: 768px) {
   .heading{
-		background-color: #5222ff;
+		background-color: #242031;
 	}
 }
 /* smaller than 480 pixels */
 @media screen and (max-width: 480px) {
 	.heading{
-		background-color: #ffee00;
+		background-color: #252409;
 	}
 }
 
