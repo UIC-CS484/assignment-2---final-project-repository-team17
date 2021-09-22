@@ -1,20 +1,19 @@
 main {
   display: flex;
   flex-wrap: wrap;
+  margin: auto;
 }
 
 .heading {
   height: 100px;
   text-align: center;
   justify-content: center;
-  margin: auto;
 }
 
 .heading > h1 {
   margin-left: auto;
   margin-right: auto;
   color: gray;
-
 }
 
 .proposal-item {
@@ -27,6 +26,7 @@ main {
 
 .proposal-group {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 0.5em;
   width: 100%;
@@ -35,6 +35,10 @@ main {
 .description-item {
   height: 350px;
   width: 50%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 400px;
+  margin: 0.5em;
 }
 
 .closing {
@@ -47,4 +51,7 @@ main {
   margin: 30px;
   background-color: gray;
   min-width: 25%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 400px;
 }
