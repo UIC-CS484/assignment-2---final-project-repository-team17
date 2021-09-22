@@ -58,24 +58,24 @@ main {
 
 /* smaller than 1024 pixels */
 @media screen and (max-width: 1024px) {
-	#responsive{
-		background-color: #cd0000;
+.heading{
+		background-color: #382424;
 	}
 }
 /* smaller than 768 pixels */
 @media screen and (max-width: 768px) {
-	#responsive{
-		background-color: #5222ff;
+  .heading{
+		background-color: #242031;
 	}
 }
 /* smaller than 480 pixels */
 @media screen and (max-width: 480px) {
-	#responsive{
-		background-color: #ffee00;
+	.heading{
+		background-color: #252409;
 	}
 }
 
 img{
 	max-width: 20%;
-	height: auto;
+	height: 100%;
 	}
