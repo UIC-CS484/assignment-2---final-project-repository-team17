@@ -1,6 +1,6 @@
 # Assignment-1---team-project-proposal-team17 created by GitHub Classroom
 
-## TEAM WORKFLOW STRATEGY
+## Team Workflow Strategyh
 
 We will be using the methodology of Feature Branching wherein the master branch will be updated when the corresponding feature branch is tested and is ready without any errors.
 
@@ -13,7 +13,7 @@ Each member of the team is responsible for working on a indivisual feature or fu
 2. Monisha S. - Frontend Framework
 3. Yashwanth T. - Frontend Framework
 
-## DEVELOPMENT TOOLS
+## Development Tools:
 * IDE - Visual Studio Code
 * Frontend - HTML5, CSS3, 
 * Backend - Node.js (Server-side language), SQLite (Database), passport.js(Authentication)
