@@ -8,10 +8,10 @@ We will be using the methodology of Feature Branching wherein the master branch 
 
 Each member of the team is responsible for working on a indivisual feature or functionality
 
-**TEAM** 
-Will B. - Backend Framework
-Monisha S. - Frontend Framework
-Yashwanth T. - Frontend Framework
+#### **TEAM:** 
+1. Will B. - Backend Framework
+2. Monisha S. - Frontend Framework
+3. Yashwanth T. - Frontend Framework
 
 ## DEVELOPMENT TOOLS
 * IDE - Visual Studio Code
