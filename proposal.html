@@ -51,12 +51,21 @@
           <h3>
             Simplified Database Schema
           </h3>
-          <ul class="hiden-list-point">
+          <ul class="hidden-list-point">
             <li>
             users: userID, username, password, email
             </li>
             <li>
-            review: reviewID, mediaID, mediaType, reviewDate, comments, stars
+            videoProfile: videoID, seriesID, userID
+            </li>
+            <li>
+            textProfile: textID, seriesID, userID
+            </li>
+            <li>
+            profileData: userID, username, password, email
+            </li>
+            <li>
+            review: userID, reviewID, mediaID, mediaType, reviewDate, comments, stars
             </li>
             <li>
             textSeries: seriesID, title, author, publisher, publishDate, link
@@ -65,13 +74,10 @@
             text: textID, seriesID, isbn, textID, title, iteration, link
             </li>
             <li>
-            Movies: title, director, release date, studio, link
-            </li>
-            <li>
             videoSeries: seriesID, title, author, publisher, publishDate, link
             </li>
             <li>
-            video: videoID, seriesID, title, publishDate, link
+            video: videotitle, seriesID, director, publisher, publishDate, link
             </li>
           </ul>
 
