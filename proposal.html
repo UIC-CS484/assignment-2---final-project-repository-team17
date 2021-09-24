@@ -42,28 +42,61 @@
             <li>AniList for Anime and Manga</li>
             <li>Openlibrary api for Books</li>
           </ul>
-              How will this data be used:<br>
-              The data fetched from API is be used to provide showtimes, watch providers, reviews and
-              number of episodes etc to the end user.
+          <h3>
+            How will this data be used:
+          </h3>
+          <p>
+             The data fetched from API is be used to provide showtimes, watch providers, reviews and number of episodes etc to the end user.
+           </p>
+          <h3>
+            Simplified Database Schema
+          </h3>
+          <ul class="hiden-list-point">
+            <li>
+            users: userID, username, password, email
+            </li>
+            <li>
+            review: reviewID, mediaID, mediaType, reviewDate, comments, stars
+            </li>
+            <li>
+            textSeries: seriesID, title, author, publisher, publishDate, link
+            </li>
+            <li>
+            text: textID, seriesID, isbn, textID, title, iteration, link
+            </li>
+            <li>
+            Movies: title, director, release date, studio, link
+            </li>
+            <li>
+            videoSeries: seriesID, title, author, publisher, publishDate, link
+            </li>
+            <li>
+            video: videoID, seriesID, title, publishDate, link
+            </li>
+          </ul>
 
       </div>
       <div class=" proposal-item description-item">
         <h2>
           User Demographic and Data:
         </h2>
-        <p>
-          Who will potentially use your site
-        </p>
+        <h3>
+          Target Demographic
+        </h3>
         <p>
           This app is geared towards the average consumer of streamed media {movies, Shows, Books, Comics}
         </p>
+        <p>
+        <h3>
+          Problems Statement
+        </h3>
         <p>
           This app will allow users enter media forms that they are interested.<br>
           They will also be able to track media as it updates.
         </p>
         <p>There are too many streaming apps and media apps. We wanted an easy way to
-  track all of the media we consume.
-</p>
+          track all of the media we consume.
+        </p>
       </div>
     </div>
     <div class="proposal-group closing">

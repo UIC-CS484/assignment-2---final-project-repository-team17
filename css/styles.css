@@ -33,11 +33,10 @@ main {
 }
 
 .description-item {
-  height: 350px;
   width: 50%;
   flex-grow: 1;
   flex-shrink: 0;
-  flex-basis: 400px;
+  flex-basis: 550px;
   margin: 0.5em;
 }
 
@@ -47,12 +46,16 @@ main {
 }
 
 .closing-item {
-  height: 250px;
   margin: 30px;
   background-color: gray;
   min-width: 25%;
   flex-grow: 1;
-  flex-basis: 150px;
+  flex-basis: 250px;
+}
+
+
+.hiden-list-points{
+  list-style:none;
 }
 
 /* smaller than 1024 pixels */
