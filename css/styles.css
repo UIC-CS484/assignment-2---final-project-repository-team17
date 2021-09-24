@@ -48,7 +48,7 @@ main {
 .closing-item {
   margin: 30px;
   background-color: gray;
-  min-width: 25%;
+  min-width: 30%;
   flex-grow: 1;
   flex-basis: 250px;
 }
