@@ -1,4 +1,4 @@
-# TrackItUp Proposal created by GitHub Classroom
+# TrackItUp Proposal
 
 ## Team Workflow Strategy
 
@@ -18,6 +18,7 @@ Each member of the team is responsible for working on a individual feature or fu
 * IDE - Visual Studio Code
 * Frontend - HTML5, CSS3,
 * Backend - Node.js (Server-side language), SQLite (Database), passport.js(Authentication)
+* Infrastructure - Docker, arbitrary cloud provider
 
 ## Github Link:
 [https://uic-cs484.github.io/assignment-1---team-project-proposal-team17/proposal.html](https://uic-cs484.github.io/assignment-1---team-project-proposal-team17/proposal.html)
