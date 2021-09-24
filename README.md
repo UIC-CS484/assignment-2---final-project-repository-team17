@@ -1,4 +1,4 @@
-# Assignment-1---team-project-proposal-team17 created by GitHub Classroom
+# TrackItUp Proposal created by GitHub Classroom
 
 ## Team Workflow Strategy
 
