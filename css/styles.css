@@ -42,17 +42,30 @@ main {
 
 .closing {
   background-color: #D3D3D3;
+  word-wrap: break-word;
   margin: 0.5em;
 }
 
 .closing-item {
   margin: 30px;
   background-color: gray;
+  word-wrap: break-word;
   min-width: 30%;
   flex-grow: 1;
   flex-basis: 250px;
 }
 
+/* using code from https://stackoverflow.com/questions/3949762/how-to-wrap-text-using-css */
+.wrapword {
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+    word-break: break-all;
+    white-space: normal;
+}
 
 .hidden-list-point{
   list-style:none;
