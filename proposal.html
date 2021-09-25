@@ -6,6 +6,7 @@
 
   <title>TrackItUp Proposal</title>
 
+  
   <meta charset="UTF-8" />
 
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -15,10 +16,42 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
   <link href="./css/styles.css" rel="stylesheet">
-  <script src="/js/index.js" defer></script>
+  <!-- <script src="/js/index.js" defer></script> -->
+  <script>
+    /** JS Code **/
+    // function myFunction() {
+    //   document.getElementById("fs").style.fontSize =;
+    // }
+    // function myFunction2() {
+    //   document.getElementById("fs").style.fontSize = document.getElementById("fs").style.fontSize+"-5px";
+
+  function changeFontSize(target) {
+  var demo = document.getElementById("fs");
+  var computedStyle = window.getComputedStyle
+        ? getComputedStyle(demo) // Standards
+        : demo.currentStyle;     // Old IE
+  var fontSize;
+
+  if (computedStyle) { // This will be true on nearly all browsers
+      fontSize = parseFloat(computedStyle && computedStyle.fontSize);
+
+      if (target == document.getElementById("blarge")) {
+        fontSize += 5;
+      } else if (target == document.getElementById("bsmall")) {
+        fontSize -= 5;
+      }
+      demo.style.fontSize = fontSize + "px";
+  }
+}
+      
+    
+  </script>
+
+
+
 </head>
 
-<body>
+<body id="fs">
   <main>
     <div class="proposal-group proposal-item heading">
       <h1><strong>TrackItUp Proposal</strong></h1>
@@ -141,8 +174,12 @@
               <li>Choosing color choices that enable color blind and color deficient people</li>
               <li>Large font sizes would help those with impaired sight</li>
           </ul>
+          <button type="button" id="blarge" onclick=changeFontSize(this)>Set font size large</button>
+          <button type="button" id="bsmall" onclick=changeFontSize(this)>Set font size small</button>
       </div>
+
     </div>
+   
   </main>
   </body>
 
