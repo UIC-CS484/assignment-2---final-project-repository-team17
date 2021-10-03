@@ -21,7 +21,7 @@ Each member of the team is responsible for working on a individual feature or fu
 * Infrastructure - Docker, arbitrary cloud provider
 
 
-## How to build and run dev server
+## How to Build / Run Development Server
 ```bash
 #clone repository
 git clone https://github.com/UIC-CS484/assignment-1---team-project-proposal-team17.git
