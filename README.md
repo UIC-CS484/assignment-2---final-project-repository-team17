@@ -24,8 +24,8 @@ Each member of the team is responsible for working on a individual feature or fu
 ## How to Build / Run Development Server
 ```bash
 #clone repository
-git clone https://github.com/UIC-CS484/assignment-1---team-project-proposal-team17.git
-cd assignment-1---team-project-proposal-team17
+git clone https://github.com/UIC-CS484/assignment-2---final-project-repository-team17.git
+cd assignment-2---final-project-repository-team17
 
 ##  install dependencies
 npm i
@@ -37,6 +37,6 @@ nodemon npm start
 
 
 ## Link:
-[Live page](https://uic-cs484.github.io/assignment-1---team-project-proposal-team17/proposal.html)
+[Live page](https://uic-cs484.github.io/assignment-2---final-project-repository-team17/proposal.html)
 
-[Git Repository](https://github.com/UIC-CS484/assignment-1---team-project-proposal-team17)
+[Git Repository](https://github.com/UIC-CS484/assignment-2---final-project-repository-team17)
