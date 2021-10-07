@@ -3,7 +3,13 @@ const path = require('path')
 const fs = require('fs')
 const testDbPath = path.join(__dirname, '..', '..', 'sqlite', 'test.sqlite')
 
-fs.unlinkSync(testDbPath)
+// try deleting file
+try {
+  fs.unlinkSync(testDbPath)
+} catch (e) {
+  // do nothing if it does not exists
+}
+
 test('db connection resolves without error', async () => {
   let error = false
   try {
@@ -45,7 +51,6 @@ test('db allows table reads', async () => {
   let result = null
   try {
     result = await db.all('SELECT * FROM tbl')
-    console.table(result)
     db.close()
   } catch (e) {
     error = true
