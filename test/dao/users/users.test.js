@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 
 const sampleUser = ({
   email: 'email@example.com',
-  password: 'theMostSecurePasswordEverIsAlsoClearlyNotPlainText',
+  password: '1234theMostSe@$%#!@#curePa@$%#!@#sswordEv@$%#!@#rIsAlsoClearlyNotPlainText@$%#!@#',
   username: null
 })
 
@@ -23,7 +23,6 @@ async function getSampleUser (email) {
   try {
     await stmt.bind({ 1: sampleUser.email })
     result = await stmt.get()
-    expect(result).toBeDefined()
   } catch (error) {
     fails = true
   } finally {
@@ -47,7 +46,6 @@ describe('DAO Users', function () {
     let error
     await createUser(sampleUser.email, sampleUser.password, sampleUser.username, (error) => {
       if (error) {
-        console.error(error)
         error = true
       } else {
         error = false

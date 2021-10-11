@@ -1,6 +1,6 @@
 const { connect } = require('..')
 const bcrypt = require('bcrypt')
-
+const validator = require('validator')
 /**
  * Generates a table head
  * @param {String} email - user email address
@@ -20,8 +20,7 @@ async function createUser (email, password, username, callback) {
         }
       })
     }
-
-    if (username && !validateUsername(username)) {
+    if (!validateUsername(username)) {
       throw new Error({
         error: 'User creation error',
         message: 'Invalid username',
@@ -30,7 +29,16 @@ async function createUser (email, password, username, callback) {
         }
       })
     }
-  } catch (except) {
+    if (!validatePassword(password)) {
+      throw new Error({
+        error: 'User creation error',
+        message: 'Invalid password',
+        data: {
+          password: 'hidden value for security'
+        }
+      })
+    }
+  } catch (error) {
     return false
   }
   const db = await connect()
@@ -46,7 +54,6 @@ async function createUser (email, password, username, callback) {
       ':hash': passwordHash,
       ':username': username
     }
-
     )
   } catch (err) {
     error = err
@@ -96,32 +103,107 @@ async function getUser (email, callback) {
  * updates user properties
  * @param {String} email - user email address
  * @param {Object} updateObject - maping of properties and values to change about user {username:"malcolm22", email: "ml@example.com"}
- * @param {Function} callback - (optiona) call back: function signiture callback(Error error, Boolean status)
+ * @param {Function} callback - (optiona) call back: function signiture callback(Error error, Array values)
  */
 
 async function updateUser (email, updateObject, callback) {
-  let error
+  if (typeof updateObject !== 'object') {
+    throw new Error({
+      error: 'User Update error',
+      message: 'Invalid parameters',
+      data: updateObject
+    })
+  }
+
+  const validTypes = {
+    email: validateEmail,
+    username: validateUsername,
+    password: validatePassword
+  }
+
+  Object.keys(updateObject).forEach((key, i) => {
+    if (validTypes[key]) {
+      validTypes[key](updateObject[key])
+    } else {
+      throw new Error({
+        error: 'User Update error',
+        message: 'Invalid parameters',
+        data: updateObject
+      })
+    }
+  })
+
+  if (updateObject.password) {
+    updateObject.hash = await bcrypt.hash(updateObject.password, 10)
+    delete updateObject.password
+  }
+
+  let fail = false; const results = []
+  const db = await connect()
+  Object.keys(updateObject).forEach(async (key, i) => {
+    let error
+    try {
+      await db.run(`
+        UPDATE users
+        SET ${key} = :value
+        WHERE email = :email
+        `, {
+        ':value': updateObject[key],
+        ':email': email
+      }
+      )
+    } catch (err) {
+      fail = true
+      error = err
+    } finally {
+      results.push({
+        key,
+        error,
+        value: updateObject[key]
+      })
+    }
+  })
+
+  db.close()
+  const errors = results.map(item => item.error)
   if (callback) {
-    callback(error, true)
+    if (fail) {
+      callback(errors, results)
+    } else {
+      callback(undefined, results)
+    }
   } else {
-    if (error) { throw error } else { return true }
+    if (fail) { throw errors } else { return results }
   }
 }
 
 /**
  * deletes user
  * @param {String} email - user email address
- * @param {Function} callback - (optiona) call back: function signiture callback(Error error, Boolean status)
+ * @param {Function} callback - (optiona) call back: function signiture callback(Error error)
+ * @returns {Error} errors encountered
  */
 async function deleteUser (email, callback) {
+  const db = await connect()
   let error
+  try {
+    await db.run(`
+        DELETE FROM users
+        WHERE email = :email
+        `, {
+      ':email': email
+    })
+  } catch (err) {
+    error = err
+  } finally {
+    db.close()
+  }
   if (callback) {
-    callback(error, true)
+    callback(error)
   } else {
-    if (error) { throw error } else { return true }
+    if (error) { throw error } else { return error }
   }
 }
-
 /**
  * turns true if an email is acceptable. False if not
  * based on rfc 5321 https://www.rfc-editor.org/rfc/rfc5321#section-4.5.3
@@ -132,6 +214,7 @@ function validateEmail (email) {
     return false
   }
 
+  // validate uniqueness
   if (email.length > 320) { return false }
 
   const emailParts = email.split('@')
@@ -156,9 +239,14 @@ function validateEmail (email) {
  * @param {String} username - user email address
  */
 function validateUsername (username) {
+  if (username === null) {
+    return true
+  }
+
   if (typeof email !== 'string') {
     return false
   }
+  // validate uniqueness
 
   // regex copied from https://stackoverflow.com/questions/3028642/regular-expression-for-letters-numbers-and#3028646
   const usernameRegex = /^[a-zA-Z0-9_.-]*$/
@@ -170,6 +258,23 @@ function validateUsername (username) {
   } else {
     return false
   }
+}
+
+/**
+ * Validates password
+ * @param {String} password - user email address
+ */
+function validatePassword (password) {
+  if (typeof password !== 'string') {
+    return false
+  }
+  return (validator.isStrongPassword(password, {
+    minLength: 8,
+    minLowercase: 1,
+    minUppercase: 1,
+    minNumbers: 1,
+    minSymbols: 1
+  }))
 }
 
 /**
