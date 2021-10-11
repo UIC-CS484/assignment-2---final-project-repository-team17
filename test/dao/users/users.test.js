@@ -1,5 +1,5 @@
 const { connect, createAppTables } = require('../../../dao')
-const { createUser, updateUser, deleteUser } = require('../../../dao/users')
+const { createUser, getUser, updateUser, deleteUser } = require('../../../dao/users')
 const bcrypt = require('bcrypt')
 
 const sampleUser = ({
@@ -58,6 +58,15 @@ describe('DAO Users', function () {
     const { fails, result } = await getSampleUser()
     expect(fails).toBeFalsy()
     expect(result).toBeDefined()
+  })
+
+  test('fetch User infomation', async () => {
+    await getUser(sampleUser.email, (error, result) => {
+      expect(error).toBeUndefined()
+      expect(result).toBeDefined()
+      expect(sampleUser.email === result.email).toBeTruthy()
+      expect(sampleUser.username === result.username).toBeTruthy()
+    })
   })
 
   test('secure password storage', async () => {
