@@ -7,7 +7,19 @@
 const app = require('../app')
 const debug = require('debug')('assignment-2---final-project-repository-team17:server')
 const http = require('http')
+const { createAppTables } = require('../dao')
 
+/**
+ * prepare database
+ *
+ */
+
+try {
+  createAppTables()
+} catch (error) {
+  console.error(error)
+  process.exit(1)
+}
 /**
  * Get port from environment and store in Express.
  */
