@@ -67,12 +67,28 @@ async function createUser (email, password, username, callback) {
  * @param {Function} callback - (optiona) call back that returns results function signiture callback(Error error, Object user)
  */
 
-async function getUser (email, updateObject, callback) {
-  let error
+async function getUser (email, callback) {
+  let error, user
+
+  try {
+    if (validateEmail(email)) {
+      user = await fetchUserFromDB(email)
+    } else {
+      throw new Error({
+        error: 'User Get error',
+        message: 'Invalid email',
+        data: {
+          email
+        }
+      })
+    }
+  } catch (err) {
+    error = err
+  }
   if (callback) {
-    callback(error, ({}))
+    callback(error, user)
   } else {
-    if (error) { throw error } else { return true }
+    if (error) { throw error } else { return user }
   }
 }
 
@@ -155,6 +171,32 @@ function validateUsername (username) {
     return false
   }
 }
+
+/**
+* queries database for a specified user
+* @param {String} email - user email address
+**/
+async function fetchUserFromDB (email) {
+  const db = await connect()
+  let fails = false; let result
+  const stmt = await db.prepare('SELECT * FROM users WHERE email = ?')
+  try {
+    await stmt.bind({ 1: email })
+    result = await stmt.get()
+  } catch (error) {
+    fails = true
+  } finally {
+    stmt.finalize()
+    db.close()
+  }
+
+  if (fails) {
+    return undefined
+  } else {
+    return result
+  }
+}
+
 module.exports = ({
   createUser,
   getUser,
