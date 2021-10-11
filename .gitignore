@@ -1,4 +1,8 @@
+#node
 node_modules/
+
+#sqlite
+*.sqlite
 
 # Logs
 logs
