@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
  * @param {String} email - user email address
  * @param {String} passwordHash - hashed user password
  * @param {String} username - (optional) username
- * @param {Function} callback - (optiona) call back that returns results
+ * @param {Function} callback - (optiona) call back: function signiture callback(Error error, Boolean status)
  * @returns {Boolean} returns true if succesful; throws and exception or returns false otherwise
  */
 async function createUser (email, password, username, callback) {
@@ -62,10 +62,25 @@ async function createUser (email, password, username, callback) {
 }
 
 /**
+ * returns user properties
+ * @param {String} email - user email address
+ * @param {Function} callback - (optiona) call back that returns results function signiture callback(Error error, Object user)
+ */
+
+async function getUser (email, updateObject, callback) {
+  let error
+  if (callback) {
+    callback(error, ({}))
+  } else {
+    if (error) { throw error } else { return true }
+  }
+}
+
+/**
  * updates user properties
  * @param {String} email - user email address
  * @param {Object} updateObject - maping of properties and values to change about user {username:"malcolm22", email: "ml@example.com"}
- * @param {Function} callback - (optiona) call back that returns results
+ * @param {Function} callback - (optiona) call back: function signiture callback(Error error, Boolean status)
  */
 
 async function updateUser (email, updateObject, callback) {
@@ -80,7 +95,7 @@ async function updateUser (email, updateObject, callback) {
 /**
  * deletes user
  * @param {String} email - user email address
- * @param {Function} callback - (optiona) call back that returns results
+ * @param {Function} callback - (optiona) call back: function signiture callback(Error error, Boolean status)
  */
 async function deleteUser (email, callback) {
   let error
@@ -142,6 +157,7 @@ function validateUsername (username) {
 }
 module.exports = ({
   createUser,
+  getUser,
   updateUser,
   deleteUser
 })
