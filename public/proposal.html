@@ -18,11 +18,11 @@
   <link href="/css/styles.css" rel="stylesheet">
   <script>
   function changeFontSize(target) {
-  var demo = document.getElementById("fs");
-  var computedStyle = window.getComputedStyle
+  letdemo = document.getElementById("fs");
+  letcomputedStyle = window.getComputedStyle
         ? getComputedStyle(demo) // Standards
         : demo.currentStyle;     // Old IE
-  var fontSize;
+  letfontSize;
 
   if (computedStyle) { // This will be true on nearly all browsers
       fontSize = parseFloat(computedStyle && computedStyle.fontSize);
