@@ -33,10 +33,3 @@ npm i
 ## run dev Server
 nodemon npm start
 ```
-
-
-
-## Link:
-[Live page](https://uic-cs484.github.io/assignment-2---final-project-repository-team17/proposal.html)
-
-[Git Repository](https://github.com/UIC-CS484/assignment-2---final-project-repository-team17)

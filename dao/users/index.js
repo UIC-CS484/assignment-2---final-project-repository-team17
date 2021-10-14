@@ -243,7 +243,7 @@ function validateUsername (username) {
     return true
   }
 
-  if (typeof email !== 'string') {
+  if (typeof username !== 'string') {
     return false
   }
   // validate uniqueness
