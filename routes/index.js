@@ -14,7 +14,6 @@ router.post('/login', function (req, res, next) {
   res.render('login', { loginError: 'Invalid Credentials.' })
 })
 
-
 router.get('/settings', function (req, res, next) {
   res.render('settings')
 })
@@ -26,11 +25,9 @@ router.get('/registration', function (req, res, next) {
 router.post('/registration', function (req, res, next) {
   res.render('signup', {
     unameError: 'Invalid Username',
-    passwordError:'Invalid Password',
-    emailError:'Invalid Email'
+    passwordError: 'Invalid Password',
+    emailError: 'Invalid Email'
   })
 })
-
-
 
 module.exports = router
