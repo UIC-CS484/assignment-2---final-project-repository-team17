@@ -8,7 +8,6 @@ const { sampleUser, sampleInvalidUser } = require('../../../utils')
 describe('Test the login route', () => {
   beforeAll(() => {
     const testDbPath = path.join(__dirname, '..', '..', '..', 'dao', 'test.sqlite')
-    console.log(testDbPath)
     try {
       fs.unlinkSync(testDbPath)
     } catch (e) {

@@ -16,7 +16,6 @@ describe('Test the Registration route', () => {
 describe('POST /registration', function () {
   beforeAll(() => {
     const testDbPath = path.join(__dirname, '..', '..', '..', 'dao', 'test.sqlite')
-    console.log(testDbPath)
     try {
       fs.unlinkSync(testDbPath)
     } catch (e) {
