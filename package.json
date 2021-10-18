@@ -13,6 +13,7 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "hbs": "^4.1.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "pug": "~3.0.2",
@@ -26,7 +27,8 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
-    "jest": "^27.2.4",
-    "nodemon": "^2.0.13"
+    "jest": "^27.2.5",
+    "nodemon": "^2.0.13",
+    "supertest": "^6.1.6"
   }
 }
