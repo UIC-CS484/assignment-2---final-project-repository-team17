@@ -27,13 +27,13 @@ describe('POST /registration', function () {
   it('it should create new users', async (done) => {
     return request(app)
       .post('/registration')
-      .send({ ...sampleUser })
+      .send({
+        username: sampleUser.username,
+        password: sampleUser.password,
+        email: sampleUser.email
+      })
       // 201 Created
       .expect(201)
-      .then((err, res) => {
-        expect(err).not.toBeDefined()
-        expect(res.text.contains('<title>Settings</title>')).toBeTruthy()
-      })
   })
 
   it('it should reject invalid users from being created', async (done) => {
