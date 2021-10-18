@@ -4,18 +4,7 @@ const { createUser } = require('../../../dao/users')
 const { createAppTables } = require('../../../dao')
 const path = require('path')
 const fs = require('fs')
-
-const sampleInvalidUser = {
-  username: 'gibefdfdsfdsdf',
-  password: 'password'
-}
-
-const sampleValidUser = {
-  email: 'validUS@example.com',
-  username: 'validUS',
-  password: 'Hunter!@#!@%#@R#WDSasdsdd34'
-}
-
+const { sampleUser, sampleInvalidUser } = require('../../../utils')
 describe('Test the login route', () => {
   beforeAll(() => {
     const testDbPath = path.join(__dirname, '..', '..', '..', 'dao', 'test.sqlite')
@@ -50,7 +39,7 @@ describe('Test the login route', () => {
   test('It should allow valid users to login logging in', async () => {
     const error = false
     try {
-      createUser(sampleValidUser.email, sampleValidUser.password, sampleValidUser.username)
+      createUser(sampleUser.email, sampleUser.password, sampleUser.username)
     } catch (error) {
       console.error(error)
     }
@@ -59,8 +48,8 @@ describe('Test the login route', () => {
     await request(app)
       .post('/login')
       .send({
-        username: sampleValidUser.username,
-        password: sampleValidUser.password
+        username: sampleUser.username,
+        password: sampleUser.password
       })
       .then((res) => {
         expect(res.text.includes('<title>Settings</title>')).toBeTruthy()

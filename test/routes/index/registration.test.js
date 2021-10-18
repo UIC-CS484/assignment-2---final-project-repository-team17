@@ -1,5 +1,8 @@
 const request = require('supertest')
 const app = require('../../../app')
+const { createAppTables } = require('../../../dao')
+const path = require('path')
+const fs = require('fs')
 
 describe('Test the Registration route', () => {
   test('It should response the GET method', () => {
@@ -10,10 +13,21 @@ describe('Test the Registration route', () => {
 })
 
 describe('POST /registration', function () {
-  it('Test the registration post', function (done) {
+  beforeAll(() => {
+    const testDbPath = path.join(__dirname, '..', '..', '..', 'dao', 'test.sqlite')
+    console.log(testDbPath)
+    try {
+      fs.unlinkSync(testDbPath)
+    } catch (e) {
+      console.error(e)
+    }
+    return createAppTables().then(error => console.log(error))
+  })
+
+  it('it should create new users', function (done) {
     request(app)
       .post('/registration')
-      .send({ uname: 'john green', email: 'abc@gmail.com', password: 'abcd' })
+      .send({ uname: 'us', email: 'abc@gmail.com', password: 'abcd' })
       .set('Accept', 'application/json')
       .expect(200)
       .end(function (err, res) {
