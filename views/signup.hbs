@@ -11,25 +11,35 @@
     <title>Sign Up!</title>
   </head>
   <body>
+    {{body}}
     <form action="/registration" method="POST">
         <div class="jumbotron">
         <div class="form-group row">
-            <label for="uname">UserName</label>
-            <input type="text" class="form-control" id="uname" placeholder="Enter Username">
-            <p class="error">{{unameError}}</p>
+            <label for="username">Username</label>
+            <input type="text" class="form-control" name="username" id="username" placeholder="Enter Username">
+            <p class="error">{{emailError}}</p>
         </div>
         <div class="form-group row">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="Email">
-            <p class="error">{{emailError}}</p>
- 
+            <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+            <p class="error">{{usernameError}}</p>
+
         </div>
         <div class="form-group row">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password">
-            <p class="error">{{passwordError}}</p>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+            <div class="row">
+              <ul>
+                <li>At least 1 uppercase letter</li>
+                <li>At least 1 lowercase letters</li>
+                <li>Base 10 digits (0 through 9)</li>
+                <li>(special characters): (~!@#$%^&*_-+=`|\(){}[]:;"'<>,.?/)</li>
+              </ul>
+            </div>
+            <p class="row error">{{passwordError}}</p>
            </div>
         <div class="form-group row">
+            <p class="error">{{generalError}}</p>
             <button type="submit" class="btn btn-primary">Sign Up</button>
         </div>
         </div>

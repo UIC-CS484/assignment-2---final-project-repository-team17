@@ -8,62 +8,44 @@ const bcrypt = require('bcrypt')
  * @param {String} passwordHash - hashed user password
  * @param {String} username - (optional) username
  * @param {Function} callback - (optiona) call back: function signiture callback(Error error, Boolean status)
- * @returns {Boolean} returns true if succesful; throws and exception or returns false otherwise
  */
 async function createUser (email, password, username, callback) {
-  try {
-    if (!validateEmail(email)) {
-      throw new Error({
-        error: 'User creation error',
-        message: 'Invalid email',
-        data: {
-          email
-        }
-      })
-    }
-    if (!validateUsername(username)) {
-      throw new Error({
-        error: 'User creation error',
-        message: 'Invalid username',
-        data: {
-          username
-        }
-      })
-    }
-    if (!validatePassword(password)) {
-      throw new Error({
-        error: 'User creation error',
-        message: 'Invalid password',
-        data: {
-          password: 'hidden value for security'
-        }
-      })
-    }
-  } catch (error) {
-    return false
+  let errors = {
+    error: 'User Error'
   }
-  const db = await connect()
-  let error
-  const passwordHash = await bcrypt.hash(password, 10)
-  try {
+
+  if (!validateEmail(email)) {
+    errors.emailError = 'Invalid email'
+  }
+  if (!validateUsername(username)) {
+    errors.usernameError = 'Invalid username'
+  }
+  if (!validatePassword(password)) {
+    errors.passwordError = 'This password is invalid. Passwords must meet criteria above'
+  }
+
+  console.error(errors)
+  if (Object.keys(errors).length <= 1) {
+    const db = await connect()
+    const passwordHash = await bcrypt.hash(password, 10)
+    errors = undefined
     await db.run(`
-    INSERT INTO users(email,hash,username)
-    VALUES( :email, :hash, :username)`, {
+      INSERT INTO users(email,hash,username)
+      VALUES( :email, :hash, :username)`, {
       ':email': email,
       ':hash': passwordHash,
       ':username': username
-    }
-    )
-  } catch (err) {
-    error = err
-  } finally {
-    db.close()
+    })
+      .catch(err => { errors = err })
+      .finally(() => db.close())
   }
 
   if (callback) {
-    callback(error, true)
+    callback(errors)
   } else {
-    if (error) { throw error } else { return true }
+    if (errors) {
+      throw errors
+    }
   }
 }
 
