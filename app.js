@@ -4,8 +4,6 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
-// const logger=require('./logger')
-// const handlebars = require('express-handlebars');
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
