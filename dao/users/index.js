@@ -24,7 +24,6 @@ async function createUser (email, password, username, callback) {
     errors.passwordError = 'This password is invalid. Passwords must meet criteria above'
   }
 
-  console.error(errors)
   if (Object.keys(errors).length <= 1) {
     const db = await connect()
     const passwordHash = await bcrypt.hash(password, 10)
