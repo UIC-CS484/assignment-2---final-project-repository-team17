@@ -1,13 +1,22 @@
 const createError = require('http-errors')
+const fs = require('fs')
 const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
-const logger = require('morgan')
+const morgan = require('morgan')
 const passport = require('passport')
 const session = require('express-session')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+
+fs.mkdir(path.join(__dirname, 'logger'), { recursive: false }, (err) => {
+  if (err.message && !err.message.includes('EEXIST: file already exists,')) {
+    console.error(err)
+  }
+})
+
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logger', 'connections.log'), { flags: 'a' })
 
 const app = express()
 
@@ -29,7 +38,8 @@ try {
 app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'hbs')
 
-app.use(logger('dev'))
+app.use(morgan('combined', { stream: accessLogStream }))
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
