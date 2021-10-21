@@ -29,8 +29,8 @@ describe('DAO Users', function () {
     await getUser(sampleUser.email, (error, result) => {
       expect(error).toBeUndefined()
       expect(result).toBeDefined()
-      expect(sampleUser.email === result.email).toBeTruthy()
-      expect(sampleUser.username === result.username).toBeTruthy()
+      expect(sampleUser.email).toBe(result.email)
+      expect(sampleUser.username).toBe(result.username)
     })
   })
 
