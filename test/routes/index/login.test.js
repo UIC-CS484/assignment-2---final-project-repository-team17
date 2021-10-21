@@ -8,7 +8,6 @@ const { sampleUser, sampleInvalidUser } = require('../../../utils')
 describe('Test the login route', () => {
   beforeAll(() => {
     const testDbPath = path.join(__dirname, '..', '..', '..', 'dao', 'test.sqlite')
-    console.log(testDbPath)
     try {
       fs.unlinkSync(testDbPath)
     } catch (e) {
@@ -17,7 +16,7 @@ describe('Test the login route', () => {
     return createAppTables().then(error => console.log(error))
   })
 
-  test('It should login the user as GET', () => {
+  test('It should display the login page on get requests', () => {
     return request(app)
       .get('/login')
       .expect(200)
@@ -32,12 +31,11 @@ describe('Test the login route', () => {
       })
       .then(res => {
         expect(res.status).toBe(401)
-        expect(res.text.includes('Invalid Credentials')).toBeTruthy()
+        expect(res.text.includes('Invalid Username or Password')).toBeTruthy()
       })
   })
 
   test('It should allow valid users to login logging in', async () => {
-    const error = false
     try {
       createUser(sampleUser.email, sampleUser.password, sampleUser.username)
     } catch (error) {
@@ -54,13 +52,5 @@ describe('Test the login route', () => {
       .then((res) => {
         expect(res.text.includes('<title>Settings</title>')).toBeTruthy()
       })
-    expect(error).toBeFalsy()
-  })
-})
-
-describe('testing for invalid credentials', function () {
-  it('Invalid Credentials.', async () => {
-    const res = await request(app).post('/login').send({ username: 'abcd', password: '1234' })
-    expect(res.statusCode).toEqual(200)
   })
 })

@@ -4,6 +4,8 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
+const passport = require('passport')
+const session = require('express-session')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
@@ -18,6 +20,20 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logger', 'con
 
 const app = express()
 
+const sess = {
+  secret: '97p]_>y~#G#[dCS/',
+  cookie: {}
+}
+
+app.use(session(sess))
+// setup passport
+try {
+  app.use(passport.initialize())
+  app.use(passport.session())
+  require('./passport')()
+} catch (error) {
+  console.error(error)
+}
 // view engine setup
 app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'hbs')
