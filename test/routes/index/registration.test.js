@@ -6,11 +6,13 @@ const path = require('path')
 const fs = require('fs')
 
 describe('Test the Registration route', () => {
-  test('It should response the GET method', () => {
+  test('It should respond to the GET method', () => {
     return request(app)
       .get('/registration')
-      .expect(200)
-  })
+      .then((res) => {
+        expect(res.text.includes('<title>Sign Up!</title>')).toBeTruthy()
+      })
+  }, 10000)
 })
 
 describe('POST /registration', function () {
@@ -21,26 +23,32 @@ describe('POST /registration', function () {
     } catch (e) {
       console.error(e)
     }
-    return createAppTables().then(error => console.log(error))
+    return createAppTables()
   })
 
-  it('it should create new users', async (done) => {
-    return request(app)
+  it('Should create a new user', async () => {
+    const response = await request(app)
       .post('/registration')
       .send({
+        email: sampleUser.email,
         username: sampleUser.username,
-        password: sampleUser.password,
-        email: sampleUser.email
+        password: sampleUser.password
       })
-      // 201 Created
-      .expect(201)
+
+    expect(response.status).toBe(302)
+    expect(response.headers.location).toBe('/settings')
   })
 
-  it('it should reject invalid users from being created', async (done) => {
-    return request(app)
+  it('it should reject invalid users from being created', async () => {
+    const response = await request(app)
       .post('/registration')
-      .send({ ...sampleInvalidUser })
-      // 406 Not Acceptable
-      .expect(406)
+      .send({
+        email: sampleInvalidUser.email,
+        username: sampleInvalidUser.username,
+        password: sampleInvalidUser.password
+      })
+
+    expect(response.status).toBe(406)
+    expect(response.text.includes('<title>Sign Up!</title>')).toBeTruthy()
   })
 })
