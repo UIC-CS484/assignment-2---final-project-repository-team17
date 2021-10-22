@@ -61,7 +61,7 @@ async function getUser (email, callback) {
     if (validateEmail(email)) {
       user = await fetchUserFromDB(email)
     } else {
-      throw new Error({
+      error = Error({
         error: 'User Get error',
         message: 'Invalid email',
         data: {
@@ -203,6 +203,7 @@ async function fetchUserFromDB (email) {
     db.close()
   }
 
+  console.error('does fail', fails, result, email)
   if (fails) {
     return undefined
   } else {

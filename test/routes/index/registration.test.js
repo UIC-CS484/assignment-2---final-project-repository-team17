@@ -10,6 +10,7 @@ describe('Test the Registration route', () => {
     return request(app)
       .get('/registration')
       .then((res) => {
+        expect(res.text).toBeDefined()
         expect(res.text.includes('<title>Sign Up!</title>')).toBeTruthy()
       })
   }, 10000)

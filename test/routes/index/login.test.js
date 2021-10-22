@@ -4,7 +4,7 @@ const { createUser } = require('../../../dao/users')
 const { createAppTables } = require('../../../dao')
 const path = require('path')
 const fs = require('fs')
-const { sampleUser, sampleInvalidUser } = require('../../../utils')
+const { sampleUser } = require('../../../utils')
 describe('Test the login route', () => {
   beforeAll(() => {
     const testDbPath = path.join(__dirname, '..', '..', '..', 'dao', 'test.sqlite')
@@ -26,12 +26,12 @@ describe('Test the login route', () => {
     expect(true).toBeTruthy()
     return request(app)
       .post('/login').send({
-        username: sampleInvalidUser.username,
-        password: sampleInvalidUser.password
+        email: 'validemail@email.com',
+        password: 'incorrect Password'
       })
       .then(res => {
         expect(res.status).toBe(401)
-        expect(res.text.includes('Invalid Username or Password')).toBeTruthy()
+        expect(res.text.includes('<p>Incorrect username or password.</p>')).toBeTruthy()
       })
   })
 
@@ -39,17 +39,18 @@ describe('Test the login route', () => {
     try {
       createUser(sampleUser.email, sampleUser.password, sampleUser.username)
     } catch (error) {
-      console.error(error)
+      expect(error).not.toBeDefined()
     }
 
     expect(true).toBeTruthy()
     await request(app)
       .post('/login')
       .send({
-        username: sampleUser.username,
+        email: sampleUser.email,
         password: sampleUser.password
       })
       .then((res) => {
+        expect(res.status).toBe(201)
         expect(res.text.includes('<title>Settings</title>')).toBeTruthy()
       })
   })
