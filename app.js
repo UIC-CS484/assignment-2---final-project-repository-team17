@@ -31,6 +31,14 @@ try {
   app.use(passport.initialize())
   app.use(passport.session())
   require('./passport')()
+  // middleware to parse session messages
+  app.use(function (req, res, next) {
+    const msgs = req.session.messages || []
+    console.log('msms', msgs)
+    res.locals.messages = msgs.join('<br/>')
+    req.session.messages = []
+    next()
+  })
 } catch (error) {
   console.error(error)
 }
