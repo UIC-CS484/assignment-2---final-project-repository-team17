@@ -203,7 +203,6 @@ async function fetchUserFromDB (email) {
     db.close()
   }
 
-  console.error('does fail', fails, result, email)
   if (fails) {
     return undefined
   } else {

@@ -34,7 +34,6 @@ try {
   // middleware to parse session messages
   app.use(function (req, res, next) {
     const msgs = req.session.messages || []
-    console.log('msms', msgs)
     res.locals.messages = msgs.join('<br/>')
     req.session.messages = []
     next()

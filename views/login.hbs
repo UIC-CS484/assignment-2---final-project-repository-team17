@@ -12,13 +12,16 @@
     <div class="login-container">
       <div class="d-flex flex-column">
         <h2 class="d-flex justify-content-center">LOGIN</h2>
-        <form action="/root">
+        <form method="POST">
           <div class="form-group mb-1">
 
             <input type="email" class="form-control" name="email" id="email" placeholder="email" required>
           </div>
           <div class="form-group">
             <input type="password" class="form-control" name="password" id="password" placeholder="password" required>
+          </div>
+          <div class="form-group">
+            <p class="login-error error">{{messages}}</p>
           </div>
             <a href="/registration"><b>Don't have account? Sign up</b></a>
           <br>

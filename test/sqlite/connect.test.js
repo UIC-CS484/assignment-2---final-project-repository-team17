@@ -1,16 +1,9 @@
 const { connect } = require('../../dao')
-const path = require('path')
-const fs = require('fs')
-const testDbPath = path.join(__dirname, '..', '..', 'dao', 'test.sqlite')
-
-// try deleting file
-try {
-  fs.unlinkSync(testDbPath)
-} catch (e) {
-  console.error(e)
-}
+const { resetTestDB } = require('../../utils')
 
 describe('sqlite', function () {
+  beforeAll(() => { return resetTestDB() })
+
   test('db connection resolves without error', async () => {
     let error = false
     try {

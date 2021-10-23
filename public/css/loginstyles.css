@@ -10,3 +10,7 @@
 .btn, input[type="email"], input[type="password"], input[type="text"] {
   border-radius: 0;
 }
+
+.login-error {
+  color: red
+}

@@ -13,12 +13,13 @@ function configureAuth () {
   }, function (email, password, callback) {
     let error = null
     let user
-    let message = null
+    let message = { message: 'Incorrect username or password.' }
     getUser(email, (err, result) => {
       if (err || !result) {
         error = err
-        message = { message: 'Incorrect username or password.' }
-      } else if (bcrypt.compareSync(password, result.hash)) {
+        return callback(error, user, message)
+      }
+      if (bcrypt.compareSync(password, result.hash)) {
         user = {
           email: result.email,
           username: result.username
