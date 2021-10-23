@@ -7,14 +7,19 @@ const { getUser } = require('../dao/users')
 * Sets up passport to use local Strategy and serialize users
 **/
 function configureAuth () {
-  passport.use(new Strategy(function (email, password, callback) {
+  passport.use(new Strategy({
+    usernameField: 'email',
+    passwordField: 'password'
+  }, function (email, password, callback) {
     let error = null
-    let user = false
-    let message = { loginError: 'Incorrect username or password.' }
+    let user
+    let message = { message: 'Incorrect username or password.' }
     getUser(email, (err, result) => {
       if (err || !result) {
         error = err
-      } else if (bcrypt.compareSync(password, result.hash)) {
+        return callback(error, user, message)
+      }
+      if (bcrypt.compareSync(password, result.hash)) {
         user = {
           email: result.email,
           username: result.username

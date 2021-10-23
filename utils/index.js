@@ -1,6 +1,7 @@
-const { connect } = require('../dao')
+const { connect, createAppTables } = require('../dao')
 const validator = require('validator')
-
+const fs = require('fs')
+const path = require('path')
 const sampleUser = ({
   email: 'email2@example.com',
   password: '1234theMostSe@$%#!@#curePa@$%#!@#sswordEv@$%#!@#rIsAlsoClearlyNotPlainText@$%#!@#',
@@ -108,6 +109,19 @@ function validatePassword (password) {
     minSymbols: 1
   }))
 }
+/**
+ * Delete test database and recreates ignores errors
+ *
+ */
+async function resetTestDB () {
+  const testDbPath = path.join(__dirname, '..', 'dao', 'test.sqlite')
+  try {
+    fs.unlinkSync(testDbPath)
+  } catch (e) {
+    console.warning('error deleting database')
+  }
+  await createAppTables()
+}
 
 module.exports = {
   sampleUser,
@@ -115,5 +129,6 @@ module.exports = {
   getSampleUser,
   validateEmail,
   validateUsername,
-  validatePassword
+  validatePassword,
+  resetTestDB
 }

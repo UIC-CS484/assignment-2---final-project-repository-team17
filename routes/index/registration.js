@@ -5,16 +5,15 @@ const { createUser } = require('../../dao/users')
 
 router.get('/', function (req, res, next) {
   if (req.isAuthenticated()) {
-    return res.redirect('settings')
+    return res.redirect('/settings')
   } else {
-    res.render('signup')
+    return res.render('signup')
   }
-  return next()
 })
 
 router.post('/', async (req, res, next) => {
   if (req.isAuthenticated()) {
-    return res.redirect('settings')
+    return res.redirect('/settings')
   }
 
   await createUser(req.body.email, req.body.password, req.body.username, (error) => {

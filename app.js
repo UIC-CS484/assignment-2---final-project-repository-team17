@@ -11,7 +11,7 @@ const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
 
 fs.mkdir(path.join(__dirname, 'logger'), { recursive: false }, (err) => {
-  if (err.message && !err.message.includes('EEXIST: file already exists,')) {
+  if (err && err.message && !err.message.includes('EEXIST: file already exists,')) {
     console.error(err)
   }
 })
@@ -31,9 +31,22 @@ try {
   app.use(passport.initialize())
   app.use(passport.session())
   require('./passport')()
+  // middleware to parse session messages
+  app.use(function (req, res, next) {
+    const msgs = req.session.messages || []
+    res.locals.messages = msgs.join('<br/>')
+    req.session.messages = []
+
+    // allows accessing user from view
+    res.locals.user = req.user || undefined
+    next()
+  })
 } catch (error) {
   console.error(error)
 }
+
+app.use(express.static('public'))
+
 // view engine setup
 app.set('views', path.join(__dirname, '/views'))
 app.set('view engine', 'hbs')
@@ -58,7 +71,6 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = req.app.get('env') === 'development' ? err : {}
-
   // render the error page
   res.status(err.status || 500)
   res.render('error')

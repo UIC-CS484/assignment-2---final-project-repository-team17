@@ -1,42 +1,31 @@
 const request = require('supertest')
 const app = require('../../../app')
-const { createAppTables } = require('../../../dao')
-const { sampleUser, sampleInvalidUser } = require('../../../utils')
-const path = require('path')
-const fs = require('fs')
+const { sampleUser, sampleInvalidUser, resetTestDB } = require('../../../utils')
 
 describe('Test the Registration route', () => {
   test('It should respond to the GET method', () => {
     return request(app)
       .get('/registration')
-      .then((res) => {
-        expect(res.text.includes('<title>Sign Up!</title>')).toBeTruthy()
+      .then((response) => {
+        expect(response.text).toBeDefined()
+        expect(response.text.includes('<title>Sign up</title>')).toBeTruthy()
       })
-  }, 10000)
+  })
 })
 
 describe('POST /registration', function () {
-  beforeAll(() => {
-    const testDbPath = path.join(__dirname, '..', '..', '..', 'dao', 'test.sqlite')
-    try {
-      fs.unlinkSync(testDbPath)
-    } catch (e) {
-      console.error(e)
-    }
-    return createAppTables()
-  })
+  beforeAll(() => { return resetTestDB() })
 
   it('Should create a new user', async () => {
-    const response = await request(app)
+    await request(app)
       .post('/registration')
       .send({
         email: sampleUser.email,
         username: sampleUser.username,
         password: sampleUser.password
       })
-
-    expect(response.status).toBe(302)
-    expect(response.headers.location).toBe('/settings')
+      .expect(302)
+      .expect('Location', /\/settings$/)
   })
 
   it('it should reject invalid users from being created', async () => {
@@ -49,6 +38,6 @@ describe('POST /registration', function () {
       })
 
     expect(response.status).toBe(406)
-    expect(response.text.includes('<title>Sign Up!</title>')).toBeTruthy()
+    expect(response.text.includes('<title>Sign up</title>')).toBeTruthy()
   })
 })
