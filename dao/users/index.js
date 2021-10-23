@@ -1,70 +1,50 @@
 const { connect } = require('..')
+const { validateEmail, validateUsername, validatePassword } = require('../../utils')
+
 const bcrypt = require('bcrypt')
-const validator = require('validator')
 /**
  * Generates a table head
  * @param {String} email - user email address
  * @param {String} passwordHash - hashed user password
  * @param {String} username - (optional) username
  * @param {Function} callback - (optiona) call back: function signiture callback(Error error, Boolean status)
- * @returns {Boolean} returns true if succesful; throws and exception or returns false otherwise
  */
 async function createUser (email, password, username, callback) {
-  try {
-    if (!validateEmail(email)) {
-      throw new Error({
-        error: 'User creation error',
-        message: 'Invalid email',
-        data: {
-          email
-        }
-      })
-    }
-    if (!validateUsername(username)) {
-      throw new Error({
-        error: 'User creation error',
-        message: 'Invalid username',
-        data: {
-          username
-        }
-      })
-    }
-    if (!validatePassword(password)) {
-      throw new Error({
-        error: 'User creation error',
-        message: 'Invalid password',
-        data: {
-          password: 'hidden value for security'
-        }
-      })
-    }
-  } catch (error) {
-    return false
+  let errors = {
+    error: 'User Error'
   }
-  const db = await connect()
-  let error
-  username = username ? username !== '' : null
 
-  const passwordHash = await bcrypt.hash(password, 10)
-  try {
+  if (!validateEmail(email)) {
+    errors.emailError = 'Invalid email'
+  }
+  if (!validateUsername(username)) {
+    errors.usernameError = 'Invalid username'
+  }
+  if (!validatePassword(password)) {
+    errors.passwordError = 'This password is invalid. Passwords must meet criteria above'
+  }
+
+  if (Object.keys(errors).length <= 1) {
+    const db = await connect()
+    const passwordHash = await bcrypt.hash(password, 10)
+    errors = undefined
     await db.run(`
-    INSERT INTO users(email,hash,username)
-    VALUES( :email, :hash, :username)`, {
+      INSERT INTO users(email,hash,username)
+      VALUES( :email, :hash, :username)`, {
       ':email': email,
       ':hash': passwordHash,
       ':username': username
-    }
-    )
-  } catch (err) {
-    error = err
-  } finally {
-    db.close()
+    })
+      .catch(err => { errors = err })
+      .finally(() => db.close())
   }
 
   if (callback) {
-    callback(error, true)
+    callback(errors)
   } else {
-    if (error) { throw error } else { return true }
+    if (errors) {
+      throw errors
+    }
   }
 }
 
@@ -81,7 +61,7 @@ async function getUser (email, callback) {
     if (validateEmail(email)) {
       user = await fetchUserFromDB(email)
     } else {
-      throw new Error({
+      error = Error({
         error: 'User Get error',
         message: 'Invalid email',
         data: {
@@ -204,78 +184,6 @@ async function deleteUser (email, callback) {
     if (error) { throw error } else { return error }
   }
 }
-/**
- * turns true if an email is acceptable. False if not
- * based on rfc 5321 https://www.rfc-editor.org/rfc/rfc5321#section-4.5.3
- * @param {String} email - user email address
- */
-function validateEmail (email) {
-  if (typeof email !== 'string') {
-    return false
-  }
-
-  // validate uniqueness
-  if (email.length > 320) { return false }
-
-  const emailParts = email.split('@')
-
-  if (emailParts.length > 2) { return false }
-
-  if (emailParts[0] > 64) { return false }
-
-  if (emailParts[1] > 256) { return false }
-
-  const emailRegex = /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/
-
-  if (email.match(emailRegex)) {
-    return true
-  } else {
-    return false
-  }
-}
-
-/**
- * Validates username
- * @param {String} username - user email address
- */
-function validateUsername (username) {
-  if (username === null) {
-    return true
-  }
-
-  if (typeof username !== 'string') {
-    return false
-  }
-  // validate uniqueness
-
-  // regex copied from https://stackoverflow.com/questions/3028642/regular-expression-for-letters-numbers-and#3028646
-  const usernameRegex = /^[a-zA-Z0-9_.-]*$/
-
-  if (username.length > 26) { return false }
-
-  if (username.match(usernameRegex)) {
-    return true
-  } else {
-    return false
-  }
-}
-
-/**
- * Validates password
- * @param {String} password - user email address
- */
-function validatePassword (password) {
-  if (typeof password !== 'string') {
-    return false
-  }
-  return (validator.isStrongPassword(password, {
-    minLength: 8,
-    minLowercase: 1,
-    minUppercase: 1,
-    minNumbers: 1,
-    minSymbols: 1
-  }))
-}
 
 /**
 * queries database for a specified user
@@ -284,9 +192,9 @@ function validatePassword (password) {
 async function fetchUserFromDB (email) {
   const db = await connect()
   let fails = false; let result
-  const stmt = await db.prepare('SELECT * FROM users WHERE email = ?')
+  const stmt = await db.prepare('SELECT email, username, hash FROM users WHERE email = :email')
   try {
-    await stmt.bind({ 1: email })
+    await stmt.bind({ ':email': email })
     result = await stmt.get()
   } catch (error) {
     fails = true

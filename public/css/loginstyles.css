@@ -1,0 +1,16 @@
+.login-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+  align-content: flex-start;
+  margin: 20px;
+}
+
+.btn, input[type="email"], input[type="password"], input[type="text"] {
+  border-radius: 0;
+}
+
+.login-error {
+  color: red
+}

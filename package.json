@@ -13,12 +13,16 @@
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-session": "^1.17.2",
+    "hbs": "^4.1.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "pug": "~3.0.2",
+    "passport": "^0.5.0",
+    "passport-local": "^1.0.0",
     "sqlite": "^4.0.23",
     "sqlite3": "^5.0.2",
-    "validator": "^13.6.0"
+    "validator": "^13.6.0",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
@@ -26,7 +30,8 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
-    "jest": "^27.2.4",
-    "nodemon": "^2.0.13"
+    "jest": "^27.2.5",
+    "nodemon": "^2.0.14",
+    "supertest": "^6.1.6"
   }
 }
