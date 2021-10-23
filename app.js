@@ -11,7 +11,7 @@ const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
 
 fs.mkdir(path.join(__dirname, 'logger'), { recursive: false }, (err) => {
-  if (err.message && !err.message.includes('EEXIST: file already exists,')) {
+  if (err && err.message && !err.message.includes('EEXIST: file already exists,')) {
     console.error(err)
   }
 })
