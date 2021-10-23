@@ -11,20 +11,23 @@
 
 <div class="container mt-3">
   <h4 class="d-flex justify-content-center">Sign Up</h4>
-  <form>
+  <form action="/registration" method="POST">
   <div class="d-flex flex-column align-items-center">
     <div class="p-1 col-sm-6">
-        <input type="text" class="form-control" id="username" placeholder="Username" required>
+        <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+        <p>{{usernameError}}</p>
     </div>
   </div>
   <div class="d-flex flex-column align-items-center">
     <div class="p-1 col-sm-6" >
-        <input type="email" class="form-control" id="email" placeholder="Email" required>
+        <input type="email" class="form-control" name="email" id="email" placeholder="Email" required>
+        <p>{{emailError}}</p>
     </div>
   </div>
   <div class="d-flex flex-column align-items-center">
     <div class="p-1 col-sm-6">
-        <input type="password" class="form-control" id="password" placeholder="Password" required>
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+        <p>{{passwordError}}</p>
     </div>
   </div>
 
