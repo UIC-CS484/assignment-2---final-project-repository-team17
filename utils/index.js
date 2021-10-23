@@ -118,7 +118,7 @@ async function resetTestDB () {
   try {
     fs.unlinkSync(testDbPath)
   } catch (e) {
-    console.warning('error deleting database')
+    console.info('error deleting database')
   }
   await createAppTables()
 }

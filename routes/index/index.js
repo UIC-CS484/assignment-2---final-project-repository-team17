@@ -2,7 +2,7 @@ const express = require('express')
 const registrationRouter = require('./registration')
 const settingsRouter = require('./settings')
 const loginRouter = require('./login')
-const logoutRouter = require('./login')
+const logoutRouter = require('./logout')
 const router = express.Router()
 
 /* GET home page. */

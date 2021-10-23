@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
 const passport = require('passport')
 const session = require('express-session')
+const exphbs = require('express-handlebars')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
@@ -48,7 +49,12 @@ try {
 app.use(express.static('public'))
 
 // view engine setup
-app.set('views', path.join(__dirname, '/views'))
+const layoutPath = path.join(__dirname, 'views', 'layouts')
+const viewPath = path.join(__dirname, 'views')
+
+const hbs = exphbs.create({layoutDir: layoutPath, defaultLayout: 'main' })
+app.engine('handlebars', hbs.engine)
+app.set('views', viewPath)
 app.set('view engine', 'hbs')
 
 app.use(morgan('combined', { stream: accessLogStream }))

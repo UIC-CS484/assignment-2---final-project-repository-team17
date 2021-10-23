@@ -8,7 +8,7 @@ describe('Test the Registration route', () => {
       .get('/registration')
       .then((response) => {
         expect(response.text).toBeDefined()
-        expect(response.text.includes('<title>Sign up</title>')).toBeTruthy()
+        expect(response.text.includes('<title>Sign Up</title>')).toBeTruthy()
       })
   })
 })
@@ -32,12 +32,11 @@ describe('POST /registration', function () {
     const response = await request(app)
       .post('/registration')
       .send({
-        email: sampleInvalidUser.email,
-        username: sampleInvalidUser.username,
+        email: 'email202@example.com',
+        username: 'email202',
         password: sampleInvalidUser.password
       })
 
     expect(response.status).toBe(406)
-    expect(response.text.includes('<title>Sign up</title>')).toBeTruthy()
   })
 })
