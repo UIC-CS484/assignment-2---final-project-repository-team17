@@ -12,7 +12,6 @@ router.get('/', function (req, res, next) {
 })
 
 router.post('/', async (req, res, next) => {
-  console.error(req.body)
   if (req.isAuthenticated()) {
     return res.redirect('/settings')
   }
