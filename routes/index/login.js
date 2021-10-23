@@ -5,7 +5,7 @@ router.get('/', (req, res, next) => {
   if (req.isAuthenticated()) {
     return res.redirect('settings')
   } else {
-    res.render('login')
+    res.render('login', { layout: 'main' })
   }
 })
 
