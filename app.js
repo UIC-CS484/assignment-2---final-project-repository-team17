@@ -49,14 +49,10 @@ try {
 app.use(express.static('public'))
 
 // view engine setup
-const layoutPath = path.join(__dirname, 'views', 'layouts')
 const viewPath = path.join(__dirname, 'views')
-
-const hbs = exphbs.create({layoutDir: layoutPath, defaultLayout: 'main' })
-app.engine('handlebars', hbs.engine)
 app.set('views', viewPath)
 app.set('view engine', 'hbs')
-
+app.set('view options', { layout: 'main.layout.hbs' })
 app.use(morgan('combined', { stream: accessLogStream }))
 
 app.use(express.json())
@@ -64,6 +60,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+// setup routes
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
 
