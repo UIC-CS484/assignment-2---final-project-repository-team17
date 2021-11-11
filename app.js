@@ -23,7 +23,9 @@ const app = express()
 
 const sess = {
   secret: '97p]_>y~#G#[dCS/',
-  cookie: {}
+  cookie: {},
+  resave: true,
+saveUninitialized: true
 }
 
 app.use(session(sess))

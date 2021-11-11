@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css" />
+  <title>Chart JS | Tutorial</title>
+</head>
+<body>
+  <div class="card text-center m-5">
+  <div class="card-header">
+  <h2>250 Popular Movies</h2>
+  </div>
+  <canvas id="myChart" ></canvas>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="chart1.js"></script>
+  <script>
+    var employeeLabel = [], employeeSalaryData = [], employeeAgeData = []
+
+async function dummyChart() {
+  await getDummyData()
+
+const ctx = document.getElementById('myChart').getContext('2d');
+
+const chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: employeeSalaryData,
+        datasets: [{
+            label: 'Movie Rank',
+            backgroundColor: 'blue',
+            borderColor: 'rgb(255, 99, 132)',
+            data: employeeLabel
+        },
+        {
+          label: 'IMDB rating',
+          backgroundColor: 'red',
+          borderColor: 'rgb(255, 99, 132)',
+          data: employeeAgeData
+      }
+      ]
+    },
+
+    // Configuration options go here
+    options: {
+      tooltips: {
+        mode: 'index'
+      }
+    }
+})}
+
+dummyChart()
+
+
+//Fetch Data from API
+
+async function getDummyData() {
+  const apiUrl = "https://imdb-api.com/en/API/MostPopularMovies/k_940rbrsh"
+
+  const response = await fetch(apiUrl)
+  const barChatData = await response.json()
+  
+  const salary = barChatData.items.map((x) => x.title)
+  console.log(salary)
+  const age = barChatData.items.map((x) => x.imDbRating)
+  const name = barChatData.items.map((x) => x.rank)
+
+ employeeSalaryData = salary
+ employeeAgeData = age
+ employeeLabel = name
+}
+  </script>
+
+
+</body>
+</html>
