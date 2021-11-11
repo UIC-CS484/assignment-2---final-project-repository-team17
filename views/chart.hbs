@@ -18,7 +18,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="chart1.js"></script>
   <script>
-    var employeeLabel = [], employeeSalaryData = [], employeeAgeData = []
+    var movieRank = [], movieName = [], movieRating = []
 
 async function dummyChart() {
   await getDummyData()
@@ -31,18 +31,18 @@ const chart = new Chart(ctx, {
 
     // The data for our dataset
     data: {
-        labels: employeeSalaryData,
+        labels: movieName,
         datasets: [{
             label: 'Movie Rank',
             backgroundColor: 'blue',
             borderColor: 'rgb(255, 99, 132)',
-            data: employeeLabel
+            data: movieRank
         },
         {
           label: 'IMDB rating',
           backgroundColor: 'red',
           borderColor: 'rgb(255, 99, 132)',
-          data: employeeAgeData
+          data: movieRating
       }
       ]
     },
@@ -66,14 +66,14 @@ async function getDummyData() {
   const response = await fetch(apiUrl)
   const barChatData = await response.json()
   
-  const salary = barChatData.items.map((x) => x.title)
-  console.log(salary)
-  const age = barChatData.items.map((x) => x.imDbRating)
-  const name = barChatData.items.map((x) => x.rank)
+  const mName = barChatData.items.map((x) => x.title)
+  console.log(mName)
+  const mRating = barChatData.items.map((x) => x.imDbRating)
+  const mRank = barChatData.items.map((x) => x.rank)
 
- employeeSalaryData = salary
- employeeAgeData = age
- employeeLabel = name
+ movieName = mName
+ movieRating = mRating
+ movieRank = mRank
 }
   </script>
 
