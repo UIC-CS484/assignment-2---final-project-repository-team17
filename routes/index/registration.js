@@ -7,7 +7,7 @@ router.get('/', function (req, res) {
   if (req.isAuthenticated()) {
     return res.redirect('/settings')
   } else {
-    return res.render('signup', { layout: 'main' })
+    return res.render('signup')
   }
 })
 
@@ -28,7 +28,6 @@ router.post('/', async (req, res, next) => {
       })
     } else if (error.error && error.error === 'User Error') {
       res.status(406).render('signup', {
-        layout: 'main',
         body: JSON.stringify(req.body),
         ...error
       })
@@ -44,7 +43,6 @@ router.post('/', async (req, res, next) => {
       }
 
       res.status(406).render('signup', {
-        layout: 'main',
         ...displayErrors
       })
     }
