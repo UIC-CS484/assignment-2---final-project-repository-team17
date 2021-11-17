@@ -33,3 +33,10 @@ npm i
 ## run dev Server
 nodemon npm start
 ```
+
+## Charting
+Chart is generated using data from [imdb-api.com](imdb-api.com) while using [chart.js](https://www.chartjs.org/docs/latest/) to render the chart
+
+This chart shows the top 250 popular movies a long with their rankings so user can discover a new movie to watch.
+
+You can view this chart at /chart or http://localhost:3000/chart when running in development mode.
