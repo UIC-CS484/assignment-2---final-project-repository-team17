@@ -20,6 +20,8 @@ Each member of the team is responsible for working on a individual feature or fu
 * Backend - Node.js (Server-side language), SQLite (Database), passport.js(Authentication)
 * Infrastructure - Docker, arbitrary cloud provider
 
+## Entity Relation Diagram
+![ER Diagram](./assets/er-diagram.png)
 
 ## How to Build / Run Development Server
 ```bash
