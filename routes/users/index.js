@@ -3,6 +3,7 @@ const router = express.Router()
 const { updateUser, deleteUser } = require('../../dao/users')
 
 router.post('/', (req, res) => {
+  res.set({ 'content-type': 'application/json; charset=utf-8' })
   if (req.isAuthenticated()) {
     updateUser(req.user.email, req.body, (errors, results) => {
       if (!errors) {
@@ -30,6 +31,7 @@ router.post('/', (req, res) => {
 })
 
 router.delete('/', (req, res) => {
+  res.set({ 'content-type': 'application/json; charset=utf-8' })
   if (req.isAuthenticated()) {
     deleteUser(req.user.email, (error) => {
       if (!error) {
