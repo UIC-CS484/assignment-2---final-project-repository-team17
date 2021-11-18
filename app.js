@@ -25,7 +25,7 @@ const sess = {
   secret: '97p]_>y~#G#[dCS/',
   cookie: {},
   resave: true,
-saveUninitialized: true
+  saveUninitialized: true
 }
 
 app.use(session(sess))

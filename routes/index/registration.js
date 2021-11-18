@@ -1,6 +1,6 @@
+// TODO this is a giant xss attack waiting to happen.
 const express = require('express')
 const router = express.Router()
-// const createError = require('http-errors')
 const { createUser } = require('../../dao/users')
 
 router.get('/', function (req, res) {
