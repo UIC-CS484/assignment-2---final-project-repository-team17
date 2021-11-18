@@ -1,4 +1,4 @@
-const { connect, createAppTables } = require('../dao')
+const { connect, createAppTables, dropAppTables } = require('../dao')
 const validator = require('validator')
 const fs = require('fs')
 const path = require('path')
@@ -116,7 +116,8 @@ function validatePassword (password) {
 async function resetTestDB () {
   const testDbPath = path.join(__dirname, '..', 'dao', 'test.sqlite')
   try {
-    fs.unlinkSync(testDbPath)
+    //fs.unlinkSync(testDbPath)
+    await dropAppTables()
   } catch (e) {
     console.info('error deleting database')
   }
