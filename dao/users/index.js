@@ -115,7 +115,6 @@ async function updateUser (email, updateObject, callback) {
 
   let fail = false; const results = []
 
-  console.log(updateObject)
   if (updateObject.password) {
     updateObject.hash = await bcrypt.hash(updateObject.password, 10)
     delete updateObject.password
@@ -125,7 +124,6 @@ async function updateUser (email, updateObject, callback) {
       value: 'hidden'
     })
   }
-  console.log(updateObject)
 
   const db = await connect()
   Object.keys(updateObject).forEach(async (key, i) => {
