@@ -1,21 +1,17 @@
+{{!-- TODO this is a giant xss attack waiting to happen. --}}
+
 <title>Settings</title>
 <link rel="stylesheet" href="css/loginstyles.css">
 <div class="jumbotron">
   <h2>Settings page for {{user.username}}</h2>
   <div class="form-group">
-    <p class="error">
-      {{error}}
-      A simple danger alert—check it out!
-    </p>
     <p id="local-errors" class="error">
-      {{error}}
-      A simple danger alert—check it out!
     </p>
     <div class="row">
       <label or="uname" class="col-form-label">UserName</label>
       <div class="col-6">
-        <input type="text" class="form-control" id="uname" placeholder="Enter Username">
-        <button type="submit" data="username" class="btn btn-primary">Update Username</button>
+        <input type="text" class="form-control" id="username" placeholder="Enter Username">
+        <button id="username-button" class="btn btn-primary">Update Username</button>
       </div>
     </div>
 
@@ -23,7 +19,7 @@
       <label for="email" class="col-form-label">Email</label>
       <div class="col-6">
         <input type="email" class="form-control" id="email" placeholder="Email">
-        <button type="submit" data="email" class="btn btn-primary">Update Email</button>
+        <button id="email-button" class="btn btn-primary">Update Email</button>
       </div>
     </div>
 
@@ -38,9 +34,16 @@
       <label for="confirm-password" class="col-form-label">Confirm Password</label>
       <div class="col-6">
         <input type="password" class="form-control" id="confirm-password" placeholder="**********">
-        <button onclick="updatePassword()" data="password" class="btn btn-primary">Update Password</button>
+        <button id="password-button" class="btn btn-primary">Update Password</button>
       </div>
     </div>
+  </div>
+
+  <div>
+    <p>
+      Warning deleting users is a permanent operation
+    </p>
+    <button id="delete-user" class="btn btn-danger">DELETE USER</button>
   </div>
 </div>
 <script>
@@ -57,33 +60,61 @@
 
     // Setting content-type
     xhr.getResponseHeader('Content-type', 'application/json');
-
+    xhr.setRequestHeader("Content-type", "application/json");
     // Perform the following when the response is ready
     xhr.onload = function () {
-      if (this.status === 200) {
-        console.log(this.responseText)
-      }
-      else {
+      if (this.status !== 200) {
         // todo write better errors
-        document.getElementById("local-errors").text("something went wrong")
+        document.getElementById('local-errors').textContent = 'something went wrong'
       }
     }
-
     xhr.send(data)
   }
-}
 
   function updateUsername() {
-
+    const username = document.getElementById('username').value
+    update(JSON.stringify({
+      username
+    }))
   }
 
   function updateEmail() {
-
+    const email = document.getElementById('email').value
+    update(JSON.stringify({
+      email
+    }))
   }
 
   function updatePassword() {
-
+    const confirmPassword = document.getElementById('confirm-password').value
+    const password = document.getElementById('password').value
+    if (password === confirmPassword) {
+      document.getElementById('local-errors').textContent = ''
+      update(JSON.stringify({
+        password
+      }))
+    } else {
+      document.getElementById('local-errors').textContent = 'Passwords do not match'
+    }
   }
 
+  function deleteUser() {
+    var xhr1 = new XMLHttpRequest();
+    xhr1.open('DELETE', "/users", true);
+    xhr1.onload = function () {
+      if (this.status !== 200) {
+        // todo write better errors
+        document.getElementById('local-errors').textContent = 'something went wrong'
+      }else{
+         window.location.assign("/login");
+      }
+    }
+    xhr1.send();
+  }
+
+  document.getElementById('password-button').addEventListener('click', updatePassword);
+  document.getElementById('username-button').addEventListener('click', updateUsername);
+  document.getElementById('email-button').addEventListener('click', updateEmail);
+  document.getElementById('delete-user').addEventListener('click', deleteUser);
 
 </script>

@@ -67,7 +67,6 @@ async function getDummyData() {
   const barChatData = await response.json()
   
   const mName = barChatData.items.map((x) => x.title)
-  console.log(mName)
   const mRating = barChatData.items.map((x) => x.imDbRating)
   const mRank = barChatData.items.map((x) => x.rank)
 
