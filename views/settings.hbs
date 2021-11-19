@@ -1,25 +1,120 @@
+{{!-- TODO this is a giant xss attack waiting to happen. --}}
+
 <title>Settings</title>
 <link rel="stylesheet" href="css/loginstyles.css">
 <div class="jumbotron">
   <h2>Settings page for {{user.username}}</h2>
-  <div class="form-group row">
-    <label for="uname">UserName</label>
-    <input type="text" class="form-control" id="uname" placeholder="Enter Username">
-  </div>
-  <div class="form-group row">
-    <label for="email" class="col-sm-2 col-form-label">Email</label>
-    <div class="col-sm-10">
-      <input type="email" class="form-control" id="email" placeholder="Email">
+  <div class="form-group">
+    <p id="local-errors" class="error">
+    </p>
+    <div class="row">
+      <label or="uname" class="col-form-label">UserName</label>
+      <div class="col-6">
+        <input type="text" class="form-control" id="username" placeholder="Enter Username">
+        <button id="username-button" class="btn btn-primary">Update Username</button>
+      </div>
     </div>
-  </div>
-  <div class="form-group row">
-    <label for="password" class="col-sm-2 col-form-label">Password</label>
-    <div class="col-sm-10">
-      <input type="password" class="form-control" id="password" placeholder="Password">
+
+    <div class="row">
+      <label for="email" class="col-form-label">Email</label>
+      <div class="col-6">
+        <input type="email" class="form-control" id="email" placeholder="Email">
+        <button id="email-button" class="btn btn-primary">Update Email</button>
+      </div>
     </div>
-    <div class="form-group row">
-      <div class="col-sm-10">
-        <button type="submit" class="btn btn-primary">Update</button>
+
+    <div class="row">
+      <label for="password" class="col-form-label">Password</label>
+      <div class="col-6">
+        <input type="password" class="form-control" id="password" placeholder="**********">
+      </div>
+    </div>
+
+    <div class="row">
+      <label for="confirm-password" class="col-form-label">Confirm Password</label>
+      <div class="col-6">
+        <input type="password" class="form-control" id="confirm-password" placeholder="**********">
+        <button id="password-button" class="btn btn-primary">Update Password</button>
       </div>
     </div>
   </div>
+
+  <div>
+    <p>
+      Warning deleting users is a permanent operation
+    </p>
+    <button id="delete-user" class="btn btn-danger">DELETE USER</button>
+  </div>
+</div>
+<script>
+  function update(data) {
+
+    //using code from https://www.geeksforgeeks.org/difference-between-get-and-post-request-in-vanilla-javascript/
+    // Instantiating new XMLHttpRequest()
+    let xhr = new XMLHttpRequest()
+
+    // open method to pass request
+    // type, url and async true/false 
+    xhr.open('POST',
+      '/users', true)
+
+    // Setting content-type
+    xhr.getResponseHeader('Content-type', 'application/json');
+    xhr.setRequestHeader("Content-type", "application/json");
+    // Perform the following when the response is ready
+    xhr.onload = function () {
+      if (this.status !== 200) {
+        // todo write better errors
+        document.getElementById('local-errors').textContent = 'something went wrong'
+      }
+    }
+    xhr.send(data)
+  }
+
+  function updateUsername() {
+    const username = document.getElementById('username').value
+    update(JSON.stringify({
+      username
+    }))
+  }
+
+  function updateEmail() {
+    const email = document.getElementById('email').value
+    update(JSON.stringify({
+      email
+    }))
+  }
+
+  function updatePassword() {
+    const confirmPassword = document.getElementById('confirm-password').value
+    const password = document.getElementById('password').value
+    if (password === confirmPassword) {
+      document.getElementById('local-errors').textContent = ''
+      update(JSON.stringify({
+        password
+      }))
+    } else {
+      document.getElementById('local-errors').textContent = 'Passwords do not match'
+    }
+  }
+
+  function deleteUser() {
+    var xhr1 = new XMLHttpRequest();
+    xhr1.open('DELETE', "/users", true);
+    xhr1.onload = function () {
+      if (this.status !== 200) {
+        // todo write better errors
+        document.getElementById('local-errors').textContent = 'something went wrong'
+      }else{
+         window.location.assign("/login");
+      }
+    }
+    xhr1.send();
+  }
+
+  document.getElementById('password-button').addEventListener('click', updatePassword);
+  document.getElementById('username-button').addEventListener('click', updateUsername);
+  document.getElementById('email-button').addEventListener('click', updateEmail);
+  document.getElementById('delete-user').addEventListener('click', deleteUser);
+
+</script>
