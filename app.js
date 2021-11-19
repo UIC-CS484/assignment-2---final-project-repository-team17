@@ -22,19 +22,14 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logger', 'con
 
 const app = express()
 const SqliteStore = essql.default(session)
-const dbChoice = process.env.JEST_WORKER_ID === undefined ? 'app.sqlite' : 'test.sqlite'
-const sess = {
-  secret: '97p]_>y~#G#[dCS/',
-  cookie: {},
-  resave: true,
-  saveUninitialized: true,
-  store: new SqliteStore({
+const seshStore = process.env.JEST_WORKER_ID === undefined
+  ? new SqliteStore({
     // Database library to use. Any library is fine as long as the API is compatible
     // with sqlite3, such as sqlite3-offline
     driver: sqlite3.Database,
     // for in-memory database
     // path: ':memory:'
-    path: path.join(__dirname, 'dao', dbChoice),
+    path: path.join(__dirname, 'dao', 'app.sqlite'),
     // Session TTL in milliseconds
     ttl: 1234,
     // (optional) Session id prefix. Default is no prefix.
@@ -43,6 +38,13 @@ const sess = {
     // Default is 5 minutes.
     cleanupInterval: 300000
   })
+  : undefined
+const sess = {
+  secret: '97p]_>y~#G#[dCS/',
+  cookie: {},
+  resave: true,
+  saveUninitialized: true,
+  store: seshStore
 }
 
 app.use(session(sess))
