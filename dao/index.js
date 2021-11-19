@@ -39,7 +39,22 @@ async function createAppTables () {
   return errors
 }
 
+async function dropAppTables () {
+  const db = await connect()
+  const errors = []
+  try {
+    await db.exec(`
+     DROP TABLE users`)
+  } catch (error) {
+    errors.push(error)
+  } finally {
+    db.close()
+  }
+  return errors
+}
+
 module.exports = {
   connect,
-  createAppTables
+  createAppTables,
+  dropAppTables
 }

@@ -4,6 +4,7 @@ const { createUser } = require('../../../dao/users')
 const { sampleUser, resetTestDB } = require('../../../utils')
 describe('Test the login route', () => {
   beforeAll(() => { return resetTestDB() })
+  afterAll(() => {return resetTestDB() })
 
   test('It should display the login page on get requests', () => {
     return request(app)

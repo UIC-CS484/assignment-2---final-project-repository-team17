@@ -5,10 +5,8 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const morgan = require('morgan')
 const passport = require('passport')
-const sqlite3 = require('sqlite3')
 const session = require('express-session')
-const essql = require('express-session-sqlite')
-
+const SQLiteStore = require('connect-sqlite3')(session)
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
 
@@ -21,30 +19,18 @@ fs.mkdir(path.join(__dirname, 'logger'), { recursive: false }, (err) => {
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'logger', 'connections.log'), { flags: 'a' })
 
 const app = express()
-const SqliteStore = essql.default(session)
-const seshStore = process.env.JEST_WORKER_ID === undefined
-  ? new SqliteStore({
-    // Database library to use. Any library is fine as long as the API is compatible
-    // with sqlite3, such as sqlite3-offline
-    driver: sqlite3.Database,
-    // for in-memory database
-    // path: ':memory:'
-    path: path.join(__dirname, 'dao', 'app.sqlite'),
-    // Session TTL in milliseconds
-    ttl: 1234,
-    // (optional) Session id prefix. Default is no prefix.
-    prefix: 'sess:',
-    // (optional) Adjusts the cleanup timer in milliseconds for deleting expired session rows.
-    // Default is 5 minutes.
-    cleanupInterval: 300000
-  })
-  : undefined
+const dbChoice = process.env.JEST_WORKER_ID === undefined
+  ? 'app.sqlite'
+  : 'test.sqlite'
+
 const sess = {
   secret: '97p]_>y~#G#[dCS/',
   cookie: {},
   resave: true,
   saveUninitialized: true,
-  store: seshStore
+  store: new SQLiteStore({
+    path: path.join(__dirname, 'dao', dbChoice)
+  })
 }
 
 app.use(session(sess))

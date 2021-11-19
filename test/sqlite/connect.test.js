@@ -19,7 +19,7 @@ describe('sqlite', function () {
     const db = await connect()
     let error = false
     try {
-      await db.exec('CREATE TABLE tbl (col TEXT)')
+      await db.exec('CREATE TABLE IF NOT EXISTS tbl (col TEXT)')
     } catch (e) {
       error = true
     } finally {
