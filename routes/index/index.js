@@ -23,5 +23,4 @@ router.use('/settings', settingsRouter)
 
 router.use('/registration', registrationRouter)
 
-
 module.exports = router
