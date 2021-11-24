@@ -1,5 +1,7 @@
 # TrackItUp Proposal
 
+[live site https://trackitup.net](https://trackitup.net/login)
+
 ## Team Workflow Strategy
 
 We will be using the methodology of Feature Branching wherein the master branch will be updated when the corresponding feature branch is tested and is ready without any errors.
@@ -41,4 +43,4 @@ Chart is generated using data from [imdb-api.com](imdb-api.com) while using [cha
 
 This chart shows the top 250 popular movies a long with their rankings so user can discover a new movie to watch.
 
-You can view this chart at /chart or http://localhost:3000/chart when running in development mode.
+You can view this chart at /chart or https://trackitup.net/chart when running in development mode.
