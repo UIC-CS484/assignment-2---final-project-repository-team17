@@ -23,6 +23,7 @@
       </div>
     </div>
 
+
     <div class="row">
       <label for="password" class="col-form-label">Password</label>
       <div class="col-6">
@@ -45,8 +46,10 @@
     </p>
     <button id="delete-user" class="btn btn-danger">DELETE USER</button>
   </div>
+  
 </div>
 <script>
+
   function update(data) {
 
     //using code from https://www.geeksforgeeks.org/difference-between-get-and-post-request-in-vanilla-javascript/
@@ -83,11 +86,14 @@
     update(JSON.stringify({
       email
     }))
+    console.log("password is " + user.password)
   }
 
   function updatePassword() {
+    
     const confirmPassword = document.getElementById('confirm-password').value
     const password = document.getElementById('password').value
+    
     if (password === confirmPassword) {
       document.getElementById('local-errors').textContent = ''
       update(JSON.stringify({
@@ -96,6 +102,8 @@
     } else {
       document.getElementById('local-errors').textContent = 'Passwords do not match'
     }
+
+    
   }
 
   function deleteUser() {

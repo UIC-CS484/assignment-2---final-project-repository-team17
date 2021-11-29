@@ -16,9 +16,26 @@ router.get('/chart', cors(),function (req, res, next) {
   res.render('chart')
 })
 
-router.use(cors({
-  origin: 'http://localhost:3000/*'
-}));
+
+const whitelist = ['http://localhost:3000/*', 'https://trackitup.net/*']
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error())
+    }
+  }
+}
+
+const corsConfig = {
+  origin: ["https://trackitup.net/*", "http://localhost:3000/*"],
+  credentials: true,
+  methods: "GET,HEAD,OPTIONS,PUT,PATCH,POST,DELETE",
+  allowedHeaders: ['Content-Type']
+};
+
+router.use(cors(corsConfig));
 
 router.use('/login', loginRouter)
 
