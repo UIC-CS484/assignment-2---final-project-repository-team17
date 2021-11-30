@@ -23,6 +23,13 @@
       </div>
     </div>
 
+    <div class="row">
+      <label for="old-password" class="col-form-label">Enter your Old Password</label>
+      <div class="col-6">
+        <input type="password" class="form-control" id="old-password" placeholder="**********">
+      </div>
+    </div>
+  </div>
 
     <div class="row">
       <label for="password" class="col-form-label">Password</label>
@@ -74,15 +81,55 @@
     xhr.send(data)
   }
 
+
+  function confirmP(data) {
+
+    //using code from https://www.geeksforgeeks.org/difference-between-get-and-post-request-in-vanilla-javascript/
+    // Instantiating new XMLHttpRequest()
+    let xhr = new XMLHttpRequest()
+
+    // open method to pass request
+    // type, url and async true/false 
+    xhr.open('POST',
+      '/settings', true)
+
+    // Setting content-type
+    xhr.getResponseHeader('Content-type', 'application/json');
+    xhr.setRequestHeader("Content-type", "application/json");
+    // Perform the following when the response is ready
+    xhr.onload = function () {
+      if (this.status !== 200) {
+        // todo write better errors
+        document.getElementById('local-errors').textContent = 'something went wrong'
+      }
+    }
+    xhr.send(data)
+  }
+
   function updateUsername() {
     const username = document.getElementById('username').value
+    const opass=document.getElementById('old-password').value
+    let user={}
+    user.username=username
+    user.oldpassword=opass
+    confirmP(JSON.stringify({
+      user
+    }))
     update(JSON.stringify({
       username
     }))
+    //update
   }
 
   function updateEmail() {
     const email = document.getElementById('email').value
+    const opass=document.getElementById('old-password').value
+    let user={}
+    user.username=username
+    user.oldpassword=opass
+    confirmP(JSON.stringify({
+      user
+    }))
     update(JSON.stringify({
       email
     }))
@@ -91,11 +138,19 @@
 
   function updatePassword() {
     
+    const oldpassword=document.getElementsById('old-password').value
     const confirmPassword = document.getElementById('confirm-password').value
     const password = document.getElementById('password').value
     
     if (password === confirmPassword) {
       document.getElementById('local-errors').textContent = ''
+      const opass=document.getElementById('old-password').value
+    let user={}
+    user.username=username
+    user.oldpassword=opass
+    confirmP(JSON.stringify({
+      user
+    }))
       update(JSON.stringify({
         password
       }))

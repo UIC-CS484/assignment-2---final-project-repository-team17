@@ -6,6 +6,8 @@ router.post('/', (req, res) => {
   res.set({ 'content-type': 'application/json; charset=utf-8' })
   if (req.isAuthenticated()) {
     updateUser(req.user.email, req.body, (errors, results) => {
+      console.log("req.body");
+      console.log(req.body);
       if (!errors) {
         res.send({
           success: true,
