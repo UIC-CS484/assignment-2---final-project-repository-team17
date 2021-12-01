@@ -8,7 +8,7 @@ const app = require('../app')
 const debug = require('debug')('assignment-2---final-project-repository-team17:server')
 const http = require('http')
 const { createAppTables } = require('../dao')
-
+const { defaultPort } = require('../config/config')
 /**
  * prepare database
  *
@@ -23,7 +23,7 @@ try {
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || '3000')
+const port = normalizePort(process.env.PORT || defaultPort)
 app.set('port', port)
 
 /**

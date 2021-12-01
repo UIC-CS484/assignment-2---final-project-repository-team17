@@ -9,6 +9,7 @@ const session = require('express-session')
 const SQLiteStore = require('connect-sqlite3')(session)
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const { sessionSecret } = require('./config/config')
 
 fs.mkdir(path.join(__dirname, 'logger'), { recursive: false }, (err) => {
   if (err && err.message && !err.message.includes('EEXIST: file already exists,')) {
@@ -24,8 +25,12 @@ const dbChoice = process.env.JEST_WORKER_ID === undefined
   : 'test.sqlite'
 
 const sess = {
-  secret: '97p]_>y~#G#[dCS/',
-  cookie: {},
+  secret: process.env.SESH_SECRET || sessionSecret,
+  cookie: {
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 1000 * 60 * 60 * 24 * 30
+  },
   resave: true,
   saveUninitialized: true,
   store: new SQLiteStore({
