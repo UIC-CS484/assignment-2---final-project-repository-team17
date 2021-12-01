@@ -1,8 +1,10 @@
 #node
-node_modules/
+node_modules
 
-#sqlite
+#databases
 *.sqlite
+dao/*.sqlite
+sessions
 
 # Logs
 logs
