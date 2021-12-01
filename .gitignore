@@ -3,6 +3,7 @@ node_modules/
 
 #sqlite
 *.sqlite
+dao/*.sqlite
 
 # Logs
 logs
@@ -12,3 +13,4 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
+sessions
