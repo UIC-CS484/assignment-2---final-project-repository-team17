@@ -9,6 +9,7 @@ const session = require('express-session')
 const SQLiteStore = require('connect-sqlite3')(session)
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const cors = require('cors')
 
 fs.mkdir(path.join(__dirname, 'logger'), { recursive: false }, (err) => {
   if (err && err.message && !err.message.includes('EEXIST: file already exists,')) {
@@ -52,6 +53,18 @@ try {
 } catch (error) {
   console.error(error)
 }
+
+// cors
+const corsConfig = {
+  origin: process.env.NODE_ENV === 'production'
+    ? 'https://trackitup.net'
+    : 'http://localhost:3000',
+  credentials: true,
+  methods: ['GET', 'HEAD', 'OPTIONS', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  allowedHeaders: ['Content-Type']
+}
+
+app.use(cors(corsConfig))
 
 app.use(express.static('public'))
 
