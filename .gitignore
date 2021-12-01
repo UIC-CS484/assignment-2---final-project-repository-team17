@@ -1,9 +1,10 @@
 #node
 node_modules
 
-#sqlite
+#databases
 *.sqlite
 dao/*.sqlite
+sessions
 
 # Logs
 logs
@@ -13,4 +14,3 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
-sessions
