@@ -179,6 +179,12 @@ async function deleteUser (email, callback) {
         `, {
       ':email': email
     })
+    await db.run(`
+      DELETE FROM movielog
+      WHERE email = :email
+    `, {
+      ':email': email
+    })
   } catch (err) {
     error = err
   } finally {

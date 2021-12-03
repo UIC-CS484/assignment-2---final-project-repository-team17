@@ -3,6 +3,7 @@ const registrationRouter = require('./registration')
 const settingsRouter = require('./settings')
 const loginRouter = require('./login')
 const logoutRouter = require('./logout')
+const homeRouter = require('../movies/home')
 
 const router = express.Router()
 
@@ -22,5 +23,7 @@ router.use('/logout', logoutRouter)
 router.use('/settings', settingsRouter)
 
 router.use('/registration', registrationRouter)
+
+//router.use('/home', homeRouter)
 
 module.exports = router

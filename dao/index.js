@@ -30,7 +30,12 @@ async function createAppTables () {
         email TEXT NOT NULL PRIMARY KEY,
         hash BLOB NOT NULL,
         username TEXT UNIQUE
-    )`)
+    );
+      CREATE TABLE IF NOT EXISTS movielog (
+        movieid TEXT NOT NULL,
+        email TEXT NOT NULL,
+        PRIMARY KEY(movieid, email)
+    );`)
   } catch (error) {
     errors.push(error)
   } finally {
@@ -44,7 +49,8 @@ async function dropAppTables () {
   const errors = []
   try {
     await db.exec(`
-     DROP TABLE users`)
+     DROP TABLE users;
+     DROP TABLE movielog;`)
   } catch (error) {
     errors.push(error)
   } finally {
