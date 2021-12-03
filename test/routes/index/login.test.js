@@ -35,6 +35,6 @@ describe('Test the login route', () => {
         password: sampleUser.password
       })
       .expect(302)
-      .expect('Location', /\/settings$/)
+      .expect('Location', /\/home$/)
   })
 })
