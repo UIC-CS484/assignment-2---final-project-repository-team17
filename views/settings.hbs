@@ -24,36 +24,36 @@
     </div>
 
     <div class="row">
-      <label for="old-password" class="col-form-label">Enter your Current Password</label>
+      <label for="old-password" class="col-form-label">Current Password</label>
       <div class="col-6">
-        <input type="password" class="form-control" id="old-password" placeholder="**********">
+        <input type="password" class="form-control" id="old-password" placeholder="**********" required>
       </div>
     </div>
   </div>
 
-    <div class="row">
-      <label for="password" class="col-form-label">Password</label>
-      <div class="col-6">
-        <input type="password" class="form-control" id="password" placeholder="**********">
-      </div>
-    </div>
-
-    <div class="row">
-      <label for="confirm-password" class="col-form-label">Confirm Password</label>
-      <div class="col-6">
-        <input type="password" class="form-control" id="confirm-password" placeholder="**********">
-        <button id="password-button" class="btn btn-primary">Update Password</button>
-      </div>
+  <div class="row">
+    <label for="password" class="col-form-label">Password</label>
+    <div class="col-6">
+      <input type="password" class="form-control" id="password" placeholder="**********">
     </div>
   </div>
 
-  <div>
-    <p>
-      Warning deleting users is a permanent operation
-    </p>
-    <button id="delete-user" class="btn btn-danger">DELETE USER</button>
+  <div class="row">
+    <label for="confirm-password" class="col-form-label">Confirm Password</label>
+    <div class="col-6">
+      <input type="password" class="form-control" id="confirm-password" placeholder="**********">
+      <button id="password-button" class="btn btn-primary">Update Password</button>
+    </div>
   </div>
-  
+</div>
+
+<div>
+  <p>
+    Warning deleting users is a permanent operation
+  </p>
+  <button id="delete-user" class="btn btn-danger">DELETE USER</button>
+</div>
+
 </div>
 <script>
 
@@ -100,65 +100,85 @@
     xhr.onload = function () {
       if (this.status !== 200) {
         // todo write better errors
-        document.getElementById('local-errors').textContent = 'something went wrong'
+
+        throw Error(`Update function returned an error on ${JSON.stringify(data)}`)
       }
+
     }
     xhr.send(data)
   }
 
   function updateUsername() {
     const username = document.getElementById('username').value
-    const opass=document.getElementById('old-password').value
-    let user={}
-    user.username=username
-    user.oldpassword=opass
-    confirmP(JSON.stringify({
-      user
-    }))
-    update(JSON.stringify({
-      username
-    }))
-    //update
+    const opass = document.getElementById('old-password').value
+    let user = {}
+    user.username = username
+    user.oldpassword = opass
+    try {
+      confirmP(JSON.stringify({
+        user
+      }))
+      //update
+      update(JSON.stringify({
+        username
+      }))
+    }
+    catch (error) {
+      document.getElementById('local-errors').textContent = 'Current Password is invalid'
+      console.error()
+    }
+
+
+
   }
 
   function updateEmail() {
     const email = document.getElementById('email').value
-    const opass=document.getElementById('old-password').value
-    let user={}
-    user.username=username
-    user.oldpassword=opass
+    const opass = document.getElementById('old-password').value
+    let user = {}
+    user.username = username
+    user.oldpassword = opass
     confirmP(JSON.stringify({
       user
     }))
     update(JSON.stringify({
       email
     }))
-    console.log("password is " + user.password)
+
   }
 
   function updatePassword() {
-    
-    const oldpassword=document.getElementsById('old-password').value
+
+    const oldpassword = document.getElementsById('old-password').value
     const confirmPassword = document.getElementById('confirm-password').value
     const password = document.getElementById('password').value
-    
+
     if (password === confirmPassword) {
       document.getElementById('local-errors').textContent = ''
-      const opass=document.getElementById('old-password').value
-    let user={}
-    user.username=username
-    user.oldpassword=opass
-    confirmP(JSON.stringify({
-      user
-    }))
+      const opass = document.getElementById('old-password').value
+    }
+    let user = {}
+    user.username = username
+    user.oldpassword = opass
+
+    try {
+      confirmP(JSON.stringify({
+        user
+      }))
+      //update
       update(JSON.stringify({
         password
       }))
-    } else {
-      document.getElementById('local-errors').textContent = 'Passwords do not match'
+    }
+    catch (error) {
+      document.getElementById('local-errors').textContent = 'Current Password is invalid'
+      console.error()
     }
 
-    
+
+
+
+
   }
 
   function deleteUser() {
@@ -168,8 +188,8 @@
       if (this.status !== 200) {
         // todo write better errors
         document.getElementById('local-errors').textContent = 'something went wrong'
-      }else{
-         window.location.assign("/login");
+      } else {
+        window.location.assign("/login");
       }
     }
     xhr1.send();

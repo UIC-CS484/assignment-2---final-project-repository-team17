@@ -14,7 +14,8 @@
   <h2>250 Popular Movies</h2>
   </div>
   <canvas id="myChart" ></canvas>
-</div>
+  <canvas id="myChart2"></canvas>
+</div></body>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="chart1.js"></script>
   <script>
@@ -74,6 +75,67 @@ async function getDummyData() {
  movieRating = mRating
  movieRank = mRank
 }
+
+var showRank = [], showName = [], showRating = []
+
+async function dummyChart2() {
+  await getDummyData2()
+
+const cty = document.getElementById('myChart2').getContext('2d');
+
+const chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
+
+    // The data for our dataset
+    data: {
+        labels: showName,
+        datasets: [{
+            label: 'Show Rank',
+            backgroundColor: 'blue',
+            borderColor: 'rgb(255, 99, 132)',
+            data: showRank
+        },
+        {
+          label: 'IMDB rating',
+          backgroundColor: 'red',
+          borderColor: 'rgb(255, 99, 132)',
+          data: showRating
+      }
+      ]
+    },
+
+    // Configuration options go here
+    options: {
+      tooltips: {
+        mode: 'index'
+      }
+    }
+})}
+
+dummyChart2()
+
+
+//Fetch Data from API
+
+async function getDummyData2() {
+  const apiUrl = "https://imdb-api.com/en/API/Top250TVs/k_940rbrsh"
+
+  const response = await fetch(apiUrl)
+  const barChatData = await response.json()
+  
+  const sName = barChatData.items.map((x) => x.title)
+  const sRating = barChatData.items.map((x) => x.imDbRating)
+  const sRank = barChatData.items.map((x) => x.rank)
+
+ showName = sName
+ showRating = sRating
+ showRank = sRank
+}
+
+
+
+
   </script>
 
 
