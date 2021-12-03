@@ -30,14 +30,18 @@ async function createAppTables () {
         email TEXT NOT NULL PRIMARY KEY,
         hash BLOB NOT NULL,
         username TEXT UNIQUE
-    )`)
-
-    await db.exec(`
+      );
+      CREATE TABLE IF NOT EXISTS movielog (
+        movieid TEXT NOT NULL,
+        email TEXT NOT NULL,
+        PRIMARY KEY(movieid, email)
+      );
       CREATE TABLE IF NOT EXISTS login_logs (
         email TEXT NOT NULL,
         status INTEGER NOT NULL,
         timestamp INTEGER NOT NULL
-    )`)
+      );`
+    )
   } catch (error) {
     errors.push(error)
   } finally {
@@ -50,8 +54,12 @@ async function dropAppTables () {
   const db = await connect()
   const errors = []
   try {
-    await db.exec('DROP TABLE users')
-    await db.exec('DROP TABLE login_logs')
+    await db.exec(`
+     DROP TABLE users;
+     DROP TABLE movielog;
+     DROP TABLE users;
+     DROP TABLE login_logs;`
+    )
   } catch (error) {
     errors.push(error)
   } finally {

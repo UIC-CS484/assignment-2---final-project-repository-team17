@@ -9,6 +9,7 @@
     "test:watch": "jest --watchAll"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
     "connect-sqlite3": "^0.9.12",
     "cookie-parser": "~1.4.4",
