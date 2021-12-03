@@ -2,7 +2,8 @@ const passport = require('passport')
 const Strategy = require('passport-local')
 const bcrypt = require('bcrypt')
 const { getUser } = require('../dao/users')
-
+const { getLogs, createLog } = require('../dao/auth')
+const { maxLoginAttempts } = require('../config/config')
 /**
 * Sets up passport to use local Strategy and serialize users
 **/
@@ -10,13 +11,23 @@ function configureAuth () {
   passport.use(new Strategy({
     usernameField: 'email',
     passwordField: 'password'
-  }, function (email, password, callback) {
+  }, async function (email, password, callback) {
     let error = null
     let user
     let message = { message: 'Incorrect username or password.' }
-    getUser(email, (err, result) => {
+    const logs = await getLogs(email)
+
+    if (logs && logs.length >= maxLoginAttempts) {
+      message = { message: 'This account is unavailable for login.' }
+      return callback(error, undefined, message)
+    }
+
+    getUser(email, async (err, result) => {
       if (err || !result) {
         error = err
+        createLog(email, false, (err) => {
+          if (err) { console.error(error) }
+        })
         return callback(error, user, message)
       }
       if (bcrypt.compareSync(password, result.hash)) {
@@ -24,7 +35,14 @@ function configureAuth () {
           email: result.email,
           username: result.username
         }
-        message = null
+        createLog(email, true, (err) => {
+          if (err) { console.error(error) }
+        })
+      } else {
+        console.error('bad pass')
+        createLog(email, false, (err) => {
+          if (err) { console.error(error) }
+        })
       }
       return callback(error, user, message)
     })

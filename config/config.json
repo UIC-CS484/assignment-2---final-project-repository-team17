@@ -1,0 +1,6 @@
+{
+  "defaultPort": 3000,
+  "sessionSecret": "'97p]_>y~#G#[dCS/'",
+  "lockoutTime": 900000,
+  "maxLoginAttempts": 7
+}
