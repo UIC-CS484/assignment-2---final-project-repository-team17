@@ -75,4 +75,4 @@ Chart is generated using data from [imdb-api.com](imdb-api.com) while using [cha
 
 This chart shows the movies which the user watches and categorizes them based on genres.
 
-(./assets/chart.png)
+![](./assets/chart.png)
