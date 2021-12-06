@@ -1,6 +1,6 @@
 # TrackItUp
 
-## Tracke of Contents
+## Table of Contents
 * [TrackItUp](#trackitup)
 * [Mission](#mission)
 * [Goals](#goals)
