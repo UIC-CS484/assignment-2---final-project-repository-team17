@@ -8,7 +8,7 @@ router.get('/', async function (req, res) {
       const data = await getMoviesData(req.user.email)
       res.render('record', { data })
     } catch (error) {
-      console.log(error)
+      res.status(500).end()
     }
   } else {
     res.redirect('/login')

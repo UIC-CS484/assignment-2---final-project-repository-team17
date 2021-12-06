@@ -26,7 +26,9 @@ router.use('/settings', settingsRouter)
 router.use('/registration', registrationRouter)
 
 router.use('/home', homeRouter)
+
 router.use('/record', recordRouter)
+
 router.use('/saved', savedRouter)
 
 module.exports = router

@@ -8,7 +8,7 @@ router.get('/', async function (req, res) {
       putMoviesData(req.query.mid, req.user.email)
       res.redirect('home')
     } catch (error) {
-      console.log(error)
+      res.status(500).redirect('home')
     }
   } else {
     res.redirect('signin')

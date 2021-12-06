@@ -7,7 +7,6 @@ async function putMoviesData (movieId, email) {
     throw new Error('Invalid movidId')
   } else {
     movieId = escape(movieId)
-    console.log(movieId)
   }
 
   const moviedataurl =
@@ -28,18 +27,54 @@ async function putMoviesData (movieId, email) {
   }
 }
 
-async function getMoviesData (email) {
+async function getMoviesData (email, callback) {
+  let error, data
+
   try {
     const db = await connect()
     const sql = 'SELECT * from movielog where email = ?'
-    const data = await db.all(sql, [email])
-    return data
-  } catch (error) {
-    console.log(error)
+    data = await db.all(sql, [email])
+  } catch (err) {
+    console.error(err)
+    error = err
+  }
+
+  if (callback) {
+    callback(error, data)
+  } else {
+    if (error) {
+      throw (error)
+    } else {
+      return data
+    }
+  }
+}
+
+async function getAllMoviesData (email, callback) {
+  let error, data
+
+  try {
+    const db = await connect()
+    const sql = 'SELECT * from movielog'
+    data = await db.all(sql)
+  } catch (err) {
+    console.error(err)
+    error = err
+  }
+
+  if (callback) {
+    callback(error, data)
+  } else {
+    if (error) {
+      throw (error)
+    } else {
+      return data
+    }
   }
 }
 
 module.exports = {
   putMoviesData,
-  getMoviesData
+  getMoviesData,
+  getAllMoviesData
 }
