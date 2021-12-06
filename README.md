@@ -1,9 +1,22 @@
 # TrackItUp
 
+* [TrackItUp](#trackitup)
+* [Mission](#mission)
+* [Goals](#goals)
+* [Team Members & Responsibilities](#team-members-&-responsibilities)
+* [Code snippets of interaction with RESTFul API](#code-snippets-of-interaction-with-restful-api)
+* [Tools](#tools)
+* [Resources](#resources)
+* [Website URL](#website-url)
+* [ER Diagram](#er-diagram)
+* [Set Up and Run](#set-up-and-run)
+* [Run Development Server](#how-to-build-/-run-development-server)
+* [Run Production Server](#how-to-build-/-run-production-server)
+* [Charting](#charting)
+
 ## Mission
 
 There are too many streaming apps and media apps. We wanted an easy way to track all of the media we consume. 
-
 
 ## Goals
 
@@ -13,7 +26,7 @@ There are too many streaming apps and media apps. We wanted an easy way to track
 ## Team Members & Responsibilities
 1. **Will Bedu**
 - Responsibilities:
-Backend, Testing, Security, CI/CD, Docker and Submissions
+ Frontend, Backend, Testing, Security, CI/CD, Infrastructure, and Submissions
 
 2. **Yashwanth Reddy Thadisina**
 - Responsibilities:
@@ -21,24 +34,22 @@ Backend, Testing, Security, CI/CD, Docker and Submissions
 
 3. **Monisha Suthapalli**
 - Responsibilities:
-Frontend, Backend,  Database diagrams, Security, Docker
+Frontend, Backend, Database diagrams, Docker
 
 ## Code snippets of interaction with RESTFul API
 
-- **IMDB API Call** 
+**IMDB API Call** 
 ```
-const moviedataurl = 'https://imdb-api.com/en/API/Title/k_lt7pi174/' + movieId
+const moviedataurl = `https://imdb-api.com/en/API/Title/${api-key}/${movieId}`
 const moviedata = await axios.get(moviedataurl)
 ```
 
-## Tools & Resources
-
-### Tools
+## Tools
 - [VSCode](https://vscode.dev/) Editor
 - [Git](https://git-scm.com/) for version control
 - [Postman](https://www.postman.com/) for Testing
 
-### Resources
+## Resources
 
 - [Node.js](https://nodejs.org/en/)
 - [Express.js](https://expressjs.com/)
@@ -69,6 +80,22 @@ npm i
 ## run dev Server
 
 nodemon npm start
+```
+
+## How to Build / Run Production Server
+```bash
+#clone repository
+
+git clone https://github.com/UIC-CS484/assignment-2---final-project-repository-team17.git
+cd assignment-2---final-project-repository-team17
+
+## Install dependencies
+
+npm i
+
+## run dev Server
+
+NODE_ENV=production node ./bin/www
 ```
 
 ## Charting
