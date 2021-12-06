@@ -34,7 +34,8 @@ async function createAppTables () {
       CREATE TABLE IF NOT EXISTS movielog (
         movieid TEXT NOT NULL,
         email TEXT NOT NULL,
-        PRIMARY KEY(movieid, email)
+        name TEXT NOT NULL,
+        genre TEXT NOT NULL
       );
       CREATE TABLE IF NOT EXISTS login_logs (
         email TEXT NOT NULL,

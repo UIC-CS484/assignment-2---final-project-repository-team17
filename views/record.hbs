@@ -10,23 +10,23 @@
 </head>
 
 <body>
-	{{#each data}}
 	<div class="container">
 		<div class="table-1">
 			<table>
 				<tbody>
 					<tr>
-						<th>Mail Id</th>
-						<th>MovieId</th>
+						<th>Movie Name</th>
+						<th>Movie Genre</th>
 					</tr>
+					{{#each data}}
 					<tr>
-						<td data-th="Block">{{this.email}}</td>
-						<td data-th="Element">{{this.movieid}}</td>
+						<td data-th="Element">{{this.name}}</td>
+						<td data-th="Element">{{this.genre}}</td>
 					</tr>
+					{{/each}}
 				</tbody>
 			</table>
 		</div>
 	</div>
-	{{/each}}
 </body>
 </html>	
