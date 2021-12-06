@@ -3,10 +3,10 @@ FROM node:12.16.3
  
 WORKDIR ./
 
-COPY ["package.json", "package-lock.json*", "./"]
+COPY . .
 
 RUN npm install
 
-COPY . .
+COPY ["package.json", "package-lock.json*", "./"]
 
 CMD [ "npm", "start" ]
