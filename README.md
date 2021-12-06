@@ -21,7 +21,7 @@ Backend, Testing, Security, CI/CD, Docker and Submissions
 
 3. **Monisha Suthapalli**
 - Responsibilities:
-Frontend, Backend,  Database diagrams, Security
+Frontend, Backend,  Database diagrams, Security, Docker
 
 ## Code snippets of interaction with RESTFul API
 
