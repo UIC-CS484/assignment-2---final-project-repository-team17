@@ -1,1 +1,18 @@
+#node
 node_modules
+
+#databases
+*.sqlite
+dao/*.sqlite
+sessions
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+sessions
