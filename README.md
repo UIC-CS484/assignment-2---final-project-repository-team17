@@ -94,7 +94,7 @@ cd assignment-2---final-project-repository-team17
 
 npm i
 
-## run dev Server
+## run Server
 
 NODE_ENV=production node ./bin/www
 ```
