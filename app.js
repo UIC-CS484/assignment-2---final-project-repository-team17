@@ -9,9 +9,6 @@ const session = require('express-session')
 const SQLiteStore = require('connect-sqlite3')(session)
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
-const homeRouter = require('./routes/movies/home')
-const recordRouter = require('./routes/movies/record')
-const savedRouter = require('./routes/movies/saved')
 const { sessionSecret } = require('./config/config')
 
 fs.mkdir(path.join(__dirname, 'logger'), { recursive: false }, (err) => {
@@ -78,13 +75,10 @@ app.use(express.static(path.join(__dirname, 'public')))
 // setup routes
 app.use('/', indexRouter)
 app.use('/users', usersRouter)
-app.use('/home', homeRouter)
-app.use('/record',recordRouter)
-app.use('/saved', savedRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  //console.log(req.url)
+  // console.log(req.url)
   next(createError(404))
 })
 

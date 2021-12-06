@@ -1,16 +1,17 @@
 const express = require('express')
+const { putMoviesData } = require('../../dao/movies/index')
 const router = express.Router()
-const getMoviesData = require('../../dao/movies/index')
 
 router.get('/', async function (req, res) {
   if (req.isAuthenticated()) {
     try {
-      const data = await getMoviesData.getMoviesData(req, res)
-      console.log(data)
-      res.render('record', { data: data })
+      putMoviesData(req.query.mid, req.user.email)
+      res.redirect('home')
     } catch (error) {
       console.log(error)
     }
+  } else {
+    res.redirect('signin')
   }
 })
 
