@@ -1,16 +1,14 @@
 const express = require('express')
+const { putMoviesData } = require('../../dao/movies/index')
 const router = express.Router()
-const axios = require('axios')
 
 router.get('/', async function (req, res) {
   if (req.isAuthenticated()) {
     try {
-      const apiurl = 'https://imdb-api.com/en/API/MostPopularMovies/k_lt7pi174'
-      const response = await axios.get(apiurl)
-
-      res.render('home', { response: response.data })
+      putMoviesData(req.query.mid, req.user.email)
+      res.redirect('home')
     } catch (error) {
-      return console.log(error)
+      res.status(500).redirect('home')
     }
   } else {
     res.redirect('signin')
